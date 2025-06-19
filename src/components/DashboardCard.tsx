@@ -1,8 +1,10 @@
 import { Card, CardActionArea, CardMedia, CardContent, Typography } from "@mui/material";
+import { Link } from "react-router";
 
-function DashboardCard({ title, description, image }: { title: string, description: string, image: string }) {
+function DashboardCard({ title, description, image, link }: { title: string, description: string, image: string, link: string }) {
     return (
-        <Card sx={{ maxWidth: 345 }}>
+        <Link to={link}>
+        <Card sx={{ width: 345 }}>
             <CardActionArea>
                 <CardMedia
                     component="img"
@@ -20,6 +22,7 @@ function DashboardCard({ title, description, image }: { title: string, descripti
                 </CardContent>
             </CardActionArea>
         </Card>
+        </Link>
     );
 }
 
