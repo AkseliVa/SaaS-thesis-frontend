@@ -4,8 +4,28 @@ import projects from "../assets/images/projects.jpg";
 import calendar from "../assets/images/calendar.jpg";
 import "../styles/dashboard.css"
 import { Grid } from "@mui/material";
+import { useEffect, useState } from "react";
+import { getEverything } from "../api";
+
+import type { Admin } from "../types";
 
 function Dashboard() {
+    const [adminData, setAdminData] = useState<Admin[]>([]);
+
+    useEffect(() => {
+        const fetchAdminData = async() => {
+            try {
+                const data = await getEverything();
+                setAdminData(data);
+            } catch (err) {
+                console.log(err)
+            }
+        };
+        fetchAdminData();
+    }, []);
+
+    console.log(adminData);
+
     return (
         <div className="container">
             <h1 className="heading">Dashboard</h1>
