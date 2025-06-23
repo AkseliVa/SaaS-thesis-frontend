@@ -4,9 +4,12 @@ import type { Company, Employee } from "../types";
 import EmployeeCard from "../components/EmployeeCard";
 import { Grid } from "@mui/material";
 import "../styles/employees.css"
+import EmployeeDialog from "../components/EmployeeDialog";
 
 function Employees() {
-    const [companyData, setCompanyData] = useState<Company[]>([]); 
+    const [companyData, setCompanyData] = useState<Company[]>([]);
+    const [open, setOpen] = useState(false);
+    const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
 
     useEffect(() => {
         const fetchCompanyData = async() => {
@@ -20,7 +23,17 @@ function Employees() {
         fetchCompanyData();
     }, []);
     
-        console.log(companyData);
+    console.log(companyData);
+
+    const handleCardClick = (employee: Employee) => {
+        setSelectedEmployee(employee);
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+        setSelectedEmployee(null);
+    };
 
     return (
         <>
@@ -30,11 +43,22 @@ function Employees() {
                 {companyData.length > 0 && 
                     companyData[0].employees?.map((employee: Employee) => {
                         return (                   
-                            <EmployeeCard employee={employee} />
+                            <EmployeeCard 
+                                employee={employee}
+                                onClick={() => handleCardClick(employee)}    
+                            />
                         )
                     })
                 }
                 </Grid>
+
+                {selectedEmployee && (
+                    <EmployeeDialog 
+                        open={open}
+                        onClose={handleClose}
+                        employee={selectedEmployee}
+                    />
+                )}
             </div>
         </>
     )

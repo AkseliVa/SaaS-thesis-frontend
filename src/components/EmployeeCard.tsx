@@ -1,10 +1,10 @@
 import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
 import type { Employee } from "../types";
 
-function EmployeeCard({ employee }: { employee: Employee }) {
+function EmployeeCard({ employee, onClick }: { employee: Employee, onClick: () => void }) {
     return (
         <Card sx={{ width: 345 }}>
-            <CardActionArea>
+            <CardActionArea onClick={onClick}>
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
                         {employee.firstname} {employee.lastname}
