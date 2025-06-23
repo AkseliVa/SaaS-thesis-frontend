@@ -4,9 +4,22 @@ import type { Company, Project } from "../types";
 import "../styles/projects.css";
 import { Grid } from "@mui/material";
 import ProjectCard from "../components/ProjectCard";
+import ProjectDialog from "../components/ProjectDialog";
 
 function Projects() {
-    const [companyData, setCompanyData] = useState<Company[]>([]); 
+    const [companyData, setCompanyData] = useState<Company[]>([]);
+    const [open, setOpen] = useState(false);
+    const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+    
+    const handleCardClick = (project: Project) => {
+        setSelectedProject(project);
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setSelectedProject(null);
+        setOpen(false);
+    }
     
     useEffect(() => {
         const fetchCompanyData = async() => {
@@ -30,11 +43,22 @@ function Projects() {
                 {companyData.length > 0 && 
                     companyData[0].projects?.map((project: Project) => {
                         return (                   
-                            <ProjectCard project={project} />
+                            <ProjectCard 
+                                project={project} 
+                                onClick={() => handleCardClick(project)}   
+                            />
                         )
                     })
                 }
                 </Grid>
+
+                {selectedProject && (
+                    <ProjectDialog 
+                        open={open}
+                        onClose={handleClose}
+                        project={selectedProject}
+                    /> 
+                )}
             </div>
         </>
     )
