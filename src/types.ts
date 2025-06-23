@@ -1,5 +1,5 @@
 export type Admin = {
-    admin_id: number,
+    admin_id?: number,
     username: string,
     password: string,
     firstname: string,
@@ -8,14 +8,14 @@ export type Admin = {
 };
 
 export type Company = {
-    company_id: number,
+    company_id?: number,
     name: string,
     employees?: Employee[],
     projects?: Project[]
 };
 
 export type Employee= {
-    employee_id: number,
+    employee_id?: number,
     firstname: string,
     lastname: string,
     email: string,
@@ -25,7 +25,7 @@ export type Employee= {
 };
 
 export type Project = {
-    project_id: number,
+    project_id?: number,
     name: string,
     description: string,
     startDate: string,

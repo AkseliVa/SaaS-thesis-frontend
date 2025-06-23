@@ -1,4 +1,4 @@
-import type { Admin, Company } from "./types";
+import type { Admin, Company, Employee } from "./types";
 
 const BASE_URL="http://localhost:8080"
 
@@ -15,5 +15,16 @@ export async function fetchCompanies(): Promise<Company[]> {
     if (!response.ok) {
         throw new Error(`Failed to fetch companies ${response.status}`)
     };
+    return await response.json();
+};
+
+export async function addEmployee(employee: Employee) {
+    const response = await fetch(`${BASE_URL}/api/employees`, {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify(employee)
+    });
     return await response.json();
 };

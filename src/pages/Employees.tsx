@@ -2,14 +2,16 @@ import { useEffect, useState } from "react";
 import { fetchCompanies } from "../api";
 import type { Company, Employee } from "../types";
 import EmployeeCard from "../components/EmployeeCard";
-import { Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import "../styles/employees.css"
 import EmployeeDialog from "../components/EmployeeDialog";
+import NewEmployeeDialog from "../components/NewEmployeeDialog";
 
 function Employees() {
     const [companyData, setCompanyData] = useState<Company[]>([]);
-    const [open, setOpen] = useState(false);
+    const [infoOpen, setInfoOpen] = useState(false);
     const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
+    const [newOpen, setNewOpen] = useState(false);
 
     useEffect(() => {
         const fetchCompanyData = async() => {
@@ -25,27 +27,37 @@ function Employees() {
     
     console.log(companyData);
 
-    const handleCardClick = (employee: Employee) => {
+    const handleInfoCardClick = (employee: Employee) => {
         setSelectedEmployee(employee);
-        setOpen(true);
+        setInfoOpen(true);
     };
 
-    const handleClose = () => {
-        setOpen(false);
+    const handleInfoClose = () => {
+        setInfoOpen(false);
         setSelectedEmployee(null);
+    };
+
+    const handleNewEmployeeClick = () => {
+        setNewOpen(true);
+    };
+
+    const handleNewEmployeeClose = () => {
+        setNewOpen(false);
     };
 
     return (
         <>
             <div className="container">
                 <h1>Employees</h1>
+                <Button onClick={handleNewEmployeeClick}>New Employee</Button>
                 <Grid container spacing={20}>
                 {companyData.length > 0 && 
                     companyData[0].employees?.map((employee: Employee) => {
                         return (                   
-                            <EmployeeCard 
+                            <EmployeeCard
+                                key={employee.employee_id}
                                 employee={employee}
-                                onClick={() => handleCardClick(employee)}    
+                                onClick={() => handleInfoCardClick(employee)}    
                             />
                         )
                     })
@@ -54,9 +66,16 @@ function Employees() {
 
                 {selectedEmployee && (
                     <EmployeeDialog 
-                        open={open}
-                        onClose={handleClose}
+                        open={infoOpen}
+                        onClose={handleInfoClose}
                         employee={selectedEmployee}
+                    />
+                )}
+
+                {newOpen && (
+                    <NewEmployeeDialog 
+                        open={newOpen}
+                        onClose={handleNewEmployeeClose}
                     />
                 )}
             </div>
