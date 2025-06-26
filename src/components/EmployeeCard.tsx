@@ -3,7 +3,7 @@ import type { Employee } from "../types";
 
 function EmployeeCard({ employee, onClick }: { employee: Employee, onClick: () => void }) {
     return (
-        <Card sx={{ width: 345 }}>
+        <Card sx={{ width: 345 }} elevation={10}>
             <CardActionArea onClick={onClick}>
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">

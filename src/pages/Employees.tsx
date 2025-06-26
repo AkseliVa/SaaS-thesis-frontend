@@ -2,16 +2,19 @@ import { useEffect, useState } from "react";
 import { fetchCompanies } from "../api";
 import type { Company, Employee } from "../types";
 import EmployeeCard from "../components/EmployeeCard";
-import { Button, Grid } from "@mui/material";
-import "../styles/employees.css"
+import { Box, Button, Grid } from "@mui/material";
+
 import EmployeeDialog from "../components/EmployeeDialog";
 import NewEmployeeDialog from "../components/NewEmployeeDialog";
+import Snackbar from '@mui/material/Snackbar';
+import Paper from '@mui/material/Paper';
 
 function Employees() {
     const [companyData, setCompanyData] = useState<Company[]>([]);
     const [infoOpen, setInfoOpen] = useState(false);
     const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
     const [newOpen, setNewOpen] = useState(false);
+    const [openSnackbar, setOpenSnackbar] = useState(false);
 
     useEffect(() => {
         const fetchCompanyData = async() => {
@@ -23,7 +26,7 @@ function Employees() {
             }
         };
         fetchCompanyData();
-    }, []);
+    }, [openSnackbar]);
     
     console.log(companyData);
 
@@ -45,12 +48,29 @@ function Employees() {
         setNewOpen(false);
     };
 
+    const handleEmployeeAdded = () => {
+        setOpenSnackbar(true);
+    };
+
     return (
-        <>
-            <div className="container">
+        <Box
+            sx={{
+                justifyContent: "center",
+                alignItems: "center",
+                margin: 10
+            }}
+        >
+                <Paper 
+                    sx={{
+                        padding: 10,
+                        margin: 2,
+                        boxSizing: "border-box"
+                    }}
+                    elevation={20}
+                >
                 <h1>Employees</h1>
-                <Button onClick={handleNewEmployeeClick}>New Employee</Button>
-                <Grid container spacing={20}>
+                <Button sx={{ marginBottom: 5}} variant="contained" color="success" onClick={handleNewEmployeeClick}>New Employee</Button>
+                <Grid container spacing={10} sx={{justifyContent: "center", margin: 2}}>
                 {companyData.length > 0 && 
                     companyData[0].employees?.map((employee: Employee) => {
                         return (                   
@@ -76,11 +96,19 @@ function Employees() {
                     <NewEmployeeDialog 
                         open={newOpen}
                         onClose={handleNewEmployeeClose}
+                        onEmployeeAdded={handleEmployeeAdded}
                     />
                 )}
-            </div>
-        </>
-    )
-}
+
+                <Snackbar
+                    open={openSnackbar}
+                    autoHideDuration={5000}
+                    onClose={() => setOpenSnackbar(false)}
+                    message="New employee has been added"
+                />
+                </Paper>
+            </Box>
+    );
+};
 
 export default Employees;

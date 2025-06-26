@@ -21,7 +21,8 @@ export type Employee= {
     email: string,
     phone: string,
     role: string,
-    projects?: Project[]
+    projects?: Project[],
+    company: Company
 };
 
 export type Project = {
