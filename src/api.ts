@@ -1,4 +1,4 @@
-import type { Admin, Company, Employee } from "./types";
+import type { Admin, Company, Employee, Project } from "./types";
 
 const BASE_URL="http://localhost:8080"
 
@@ -28,3 +28,14 @@ export async function addEmployee(employee: Employee) {
     });
     return await response.json();
 };
+
+export async function addProject(project: Project) {
+    const response = await fetch(`${BASE_URL}/api/projects`, {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify(project)
+    });
+    return await response.json();
+}

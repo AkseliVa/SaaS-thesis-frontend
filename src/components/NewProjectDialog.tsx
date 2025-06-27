@@ -1,44 +1,42 @@
 import { Alert, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
-import type { Employee } from "../types";
+import type { Project } from "../types";
 import { useState } from "react";
-import { addEmployee } from "../api";
+import { addProject } from "../api";
 
-function NewEmployeeDialog({ open, onClose, onEmployeeAdded }: { open: boolean, onClose: () => void, onEmployeeAdded: () => void }) {
+function NewProjectDialog({ open, onClose, onProjectAdded }: { open: boolean, onClose: () => void, onProjectAdded: () => void }) {
     const [showAlert, setShowAlert] = useState(false);
-    const [employee, setEmployee] = useState<Employee>({
-        firstname: "",
-        lastname: "",
-        role: "",
-        email: "",
-        phone: "",
+    const [project, setProject] = useState<Project>({
+        name: "",
+        description: "",
+        startDate: "",
+        endDate: "",
         company: {
             company_id: 1,
-            name: "Hykos"
+            name: ""
         }
     });
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setEmployee({...employee, [event.target.name]: event.target.value});
+        setProject({...project, [event.target.name]: event.target.value});
     };
 
     const handleSave = async () => {
-        const { firstname, lastname, role, email, phone } = employee;
+        const { name, description, startDate, endDate } = project;
 
-        if (!firstname || !lastname || !role || !email || !phone) {
+        if (!name || !description || !startDate || !endDate) {
             setShowAlert(true);
             return;
         }
 
         setShowAlert(false);
-        await addEmployee(employee);
-        onEmployeeAdded();
+        await addProject(project);
+        onProjectAdded();
         onClose();
-        setEmployee({
-            firstname: "",
-            lastname: "",
-            role: "",
-            email: "",
-            phone: "",
+        setProject({
+            name: "",
+            description: "",
+            startDate: "",
+            endDate: "",
             company: {
                 company_id: 1,
                 name: ""
@@ -48,7 +46,7 @@ function NewEmployeeDialog({ open, onClose, onEmployeeAdded }: { open: boolean, 
 
     return (
         <Dialog open={open} onClose={onClose}>
-            <DialogTitle>Add a New Employee</DialogTitle>
+            <DialogTitle>Add a New Project</DialogTitle>
             <DialogContent>
                 {showAlert && (
                     <Alert severity="warning" sx={{ mb: 2 }}>
@@ -59,40 +57,32 @@ function NewEmployeeDialog({ open, onClose, onEmployeeAdded }: { open: boolean, 
                     fullWidth
                     margin="dense"
                     required
-                    label="Firstname"
-                    name="firstname"
+                    label="Name"
+                    name="name"
                     onChange={handleChange}
                 />
                 <TextField
                     fullWidth
                     margin="dense"
                     required
-                    label="Lastname"
-                    name="lastname"
+                    label="Description"
+                    name="description"
                     onChange={handleChange}
                 />
                 <TextField
                     fullWidth
                     margin="dense"
                     required
-                    label="Role"
-                    name="role"
+                    label="Start Date"
+                    name="startDate"
                     onChange={handleChange}
                 />
                 <TextField
                     fullWidth
                     margin="dense"
                     required
-                    label="Email"
-                    name="email"
-                    onChange={handleChange}
-                />
-                <TextField
-                    fullWidth
-                    margin="dense"
-                    required
-                    label="Phone"
-                    name="phone"
+                    label="End Date"
+                    name="endDate"
                     onChange={handleChange}
                 />
             </DialogContent>
@@ -106,4 +96,4 @@ function NewEmployeeDialog({ open, onClose, onEmployeeAdded }: { open: boolean, 
     )
 };
 
-export default NewEmployeeDialog;
+export default NewProjectDialog;

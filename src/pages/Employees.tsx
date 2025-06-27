@@ -68,44 +68,44 @@ function Employees() {
                     }}
                     elevation={20}
                 >
-                <h1>Employees</h1>
-                <Button sx={{ marginBottom: 5}} variant="contained" color="success" onClick={handleNewEmployeeClick}>New Employee</Button>
-                <Grid container spacing={10} sx={{justifyContent: "center", margin: 2}}>
-                {companyData.length > 0 && 
-                    companyData[0].employees?.map((employee: Employee) => {
-                        return (                   
-                            <EmployeeCard
-                                key={employee.employee_id}
-                                employee={employee}
-                                onClick={() => handleInfoCardClick(employee)}    
-                            />
-                        )
-                    })
-                }
-                </Grid>
+                    <h1>Employees</h1>
+                    <Button sx={{ marginBottom: 5}} variant="contained" color="success" onClick={handleNewEmployeeClick}>New Employee</Button>
+                    <Grid container spacing={10} sx={{justifyContent: "center", margin: 2}}>
+                        {companyData.length > 0 && 
+                            companyData[0].employees?.map((employee: Employee) => {
+                                return (                   
+                                    <EmployeeCard
+                                        key={employee.employee_id}
+                                        employee={employee}
+                                        onClick={() => handleInfoCardClick(employee)}    
+                                    />
+                                )
+                            })
+                        }
+                    </Grid>
 
-                {selectedEmployee && (
-                    <EmployeeDialog 
-                        open={infoOpen}
-                        onClose={handleInfoClose}
-                        employee={selectedEmployee}
+                    {selectedEmployee && (
+                        <EmployeeDialog 
+                            open={infoOpen}
+                            onClose={handleInfoClose}
+                            employee={selectedEmployee}
+                        />
+                    )}
+
+                    {newOpen && (
+                        <NewEmployeeDialog 
+                            open={newOpen}
+                            onClose={handleNewEmployeeClose}
+                            onEmployeeAdded={handleEmployeeAdded}
+                        />
+                    )}
+
+                    <Snackbar
+                        open={openSnackbar}
+                        autoHideDuration={5000}
+                        onClose={() => setOpenSnackbar(false)}
+                        message="New employee has been added"
                     />
-                )}
-
-                {newOpen && (
-                    <NewEmployeeDialog 
-                        open={newOpen}
-                        onClose={handleNewEmployeeClose}
-                        onEmployeeAdded={handleEmployeeAdded}
-                    />
-                )}
-
-                <Snackbar
-                    open={openSnackbar}
-                    autoHideDuration={5000}
-                    onClose={() => setOpenSnackbar(false)}
-                    message="New employee has been added"
-                />
                 </Paper>
             </Box>
     );

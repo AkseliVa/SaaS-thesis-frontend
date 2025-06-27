@@ -31,5 +31,6 @@ export type Project = {
     description: string,
     startDate: string,
     endDate: string,
+    company: Company,
     workers?: Employee[]
 };

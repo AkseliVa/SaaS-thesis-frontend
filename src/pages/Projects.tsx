@@ -2,14 +2,17 @@ import { useState, useEffect } from "react";
 import { fetchCompanies } from "../api";
 import type { Company, Project } from "../types";
 import "../styles/projects.css";
-import { Grid } from "@mui/material";
+import { Box, Button, Grid, Paper, Snackbar } from "@mui/material";
 import ProjectCard from "../components/ProjectCard";
 import ProjectDialog from "../components/ProjectDialog";
+import NewProjectDialog from "../components/NewProjectDialog";
 
 function Projects() {
     const [companyData, setCompanyData] = useState<Company[]>([]);
     const [open, setOpen] = useState(false);
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+    const [newOpen, setNewOpen] = useState(false);
+    const [openSnackbar, setOpenSnackbar] = useState(false);
     
     const handleCardClick = (project: Project) => {
         setSelectedProject(project);
@@ -31,36 +34,78 @@ function Projects() {
             }
         };
         fetchCompanyData();
-    }, []);
+    }, [openSnackbar]);
     
     console.log(companyData);
 
-    return (
-        <>
-            <div className="container">
-                <h1>Projects</h1>
-                <Grid container spacing={20}>
-                {companyData.length > 0 && 
-                    companyData[0].projects?.map((project: Project) => {
-                        return (                   
-                            <ProjectCard 
-                                project={project} 
-                                onClick={() => handleCardClick(project)}   
-                            />
-                        )
-                    })
-                }
-                </Grid>
+    const handleNewProjectClick = () => {
+        setNewOpen(true);
+    };
 
-                {selectedProject && (
-                    <ProjectDialog 
-                        open={open}
-                        onClose={handleClose}
-                        project={selectedProject}
-                    /> 
-                )}
-            </div>
-        </>
+    const handleNewProjectClose = () => {
+        setNewOpen(false);
+    };
+
+    const handleProjectAdded = () => {
+        setOpenSnackbar(true);
+    };
+
+    return (
+        <Box
+            sx={{
+                justifyContent: "center",
+                alignItems: "center",
+                margin: 10
+            }}
+        >
+            <Paper 
+                sx={{
+                    padding: 10,
+                    margin: 2,
+                    boxSizing: "border-box"
+                }}
+                elevation={20}
+            >
+                    <h1>Projects</h1>
+                    <Button sx={{ marginBottom: 5}} variant="contained" color="success" onClick={handleNewProjectClick}>New Project</Button>
+                    <Grid container spacing={10} sx={{justifyContent: "center", margin: 2}}>
+                        {companyData.length > 0 && 
+                            companyData[0].projects?.map((project: Project) => {
+                                return (                   
+                                    <ProjectCard
+                                        key={project.project_id}
+                                        project={project} 
+                                        onClick={() => handleCardClick(project)}   
+                                    />
+                                )
+                            })
+                        }
+                    </Grid>
+
+                    {selectedProject && (
+                        <ProjectDialog 
+                            open={open}
+                            onClose={handleClose}
+                            project={selectedProject}
+                        /> 
+                    )}
+
+                    {newOpen && (
+                        <NewProjectDialog 
+                            open={newOpen}
+                            onClose={handleNewProjectClose}
+                            onProjectAdded={handleProjectAdded}
+                        />
+                    )}
+
+                    <Snackbar
+                        open={openSnackbar}
+                        autoHideDuration={5000}
+                        onClose={() => setOpenSnackbar(false)}
+                        message="New project has been added"
+                    />
+                </Paper>
+            </Box>
     )
 }
 
