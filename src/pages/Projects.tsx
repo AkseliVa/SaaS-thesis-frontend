@@ -65,6 +65,7 @@ function Projects() {
                     boxSizing: "border-box"
                 }}
                 elevation={20}
+                square={false}
             >
                     <h1>Projects</h1>
                     <Button sx={{ marginBottom: 5}} variant="contained" color="success" onClick={handleNewProjectClick}>New Project</Button>

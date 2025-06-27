@@ -67,6 +67,7 @@ function Employees() {
                         boxSizing: "border-box"
                     }}
                     elevation={20}
+                    square={false}
                 >
                     <h1>Employees</h1>
                     <Button sx={{ marginBottom: 5}} variant="contained" color="success" onClick={handleNewEmployeeClick}>New Employee</Button>
