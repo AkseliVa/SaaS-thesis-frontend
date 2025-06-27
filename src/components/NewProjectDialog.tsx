@@ -2,6 +2,10 @@ import { Alert, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextF
 import type { Project } from "../types";
 import { useState } from "react";
 import { addProject } from "../api";
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import dayjs from 'dayjs';
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 function NewProjectDialog({ open, onClose, onProjectAdded }: { open: boolean, onClose: () => void, onProjectAdded: () => void }) {
     const [showAlert, setShowAlert] = useState(false);
@@ -69,22 +73,31 @@ function NewProjectDialog({ open, onClose, onProjectAdded }: { open: boolean, on
                     name="description"
                     onChange={handleChange}
                 />
-                <TextField
-                    fullWidth
-                    margin="dense"
-                    required
-                    label="Start Date"
-                    name="startDate"
-                    onChange={handleChange}
-                />
-                <TextField
-                    fullWidth
-                    margin="dense"
-                    required
-                    label="End Date"
-                    name="endDate"
-                    onChange={handleChange}
-                />
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DesktopDatePicker
+                        label="Start Date"
+                        value={project.startDate ? dayjs(project.startDate) : null}
+                        onChange={(value) => {
+                        setProject({
+                            ...project,
+                            startDate: value ? dayjs(value).format("YYYY-MM-DD") : "",
+                        });
+                        }}
+                        slotProps={{ textField: { fullWidth: true, margin: "dense", required: true } }}
+                    />
+
+                    <DesktopDatePicker
+                        label="End Date"
+                        value={project.endDate ? dayjs(project.endDate) : null}
+                        onChange={(value) => {
+                        setProject({
+                            ...project,
+                            endDate: value ? dayjs(value).format("YYYY-MM-DD") : "",
+                        });
+                        }}
+                        slotProps={{ textField: { fullWidth: true, margin: "dense", required: true } }}
+                    />
+                </LocalizationProvider>
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleSave}>Save</Button>
