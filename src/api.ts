@@ -38,4 +38,16 @@ export async function addProject(project: Project) {
         body: JSON.stringify(project)
     });
     return await response.json();
-}
+};
+
+export async function deleteEmployee(id: number) {
+    const response = await fetch(`${BASE_URL}/api/employees/${id}`, {
+        method: "DELETE"
+    });
+
+    if (!response.ok) {
+        throw new Error(`Failed to delete employee ${response.status}`)
+    };
+
+    return;
+};

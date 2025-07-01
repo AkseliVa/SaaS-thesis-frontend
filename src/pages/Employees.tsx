@@ -15,6 +15,7 @@ function Employees() {
     const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
     const [newOpen, setNewOpen] = useState(false);
     const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState<string>("");
 
     useEffect(() => {
         const fetchCompanyData = async() => {
@@ -48,7 +49,8 @@ function Employees() {
         setNewOpen(false);
     };
 
-    const handleEmployeeAdded = () => {
+    const handleEmployeeAdded = (message: string) => {
+        setSnackbarMessage(message)
         setOpenSnackbar(true);
     };
 
@@ -90,6 +92,7 @@ function Employees() {
                             open={infoOpen}
                             onClose={handleInfoClose}
                             employee={selectedEmployee}
+                            onEmployeeDeleted={() => handleEmployeeAdded("Employee deleted successfully")} 
                         />
                     )}
 
@@ -97,7 +100,7 @@ function Employees() {
                         <NewEmployeeDialog 
                             open={newOpen}
                             onClose={handleNewEmployeeClose}
-                            onEmployeeAdded={handleEmployeeAdded}
+                            onEmployeeAdded={() => handleEmployeeAdded("Employee added successfully")}
                         />
                     )}
 
@@ -105,7 +108,7 @@ function Employees() {
                         open={openSnackbar}
                         autoHideDuration={5000}
                         onClose={() => setOpenSnackbar(false)}
-                        message="New employee has been added"
+                        message={snackbarMessage}
                     />
                 </Paper>
             </Box>
