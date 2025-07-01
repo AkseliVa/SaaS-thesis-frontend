@@ -15,7 +15,7 @@ function EmployeeDialog({ open, onClose, employee, onEmployeeDeleted }: { open: 
         } catch (err) {
             console.log(err)
         }
-    }
+    };
     
     return (
         <Dialog open={open} onClose={onClose}>

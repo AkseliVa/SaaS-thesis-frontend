@@ -51,3 +51,15 @@ export async function deleteEmployee(id: number) {
 
     return;
 };
+
+export async function deleteProject(id: number) {
+    const response = await fetch(`${BASE_URL}/api/projects/${id}`, {
+        method: "DELETE"
+    });
+
+    if (!response.ok) {
+        throw new Error(`Failed to delete project ${response.status}`)
+    };
+
+    return;
+}

@@ -13,6 +13,7 @@ function Projects() {
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
     const [newOpen, setNewOpen] = useState(false);
     const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState<string>("");
     
     const handleCardClick = (project: Project) => {
         setSelectedProject(project);
@@ -46,7 +47,8 @@ function Projects() {
         setNewOpen(false);
     };
 
-    const handleProjectAdded = () => {
+    const handleProjectAdded = (message: string) => {
+        setSnackbarMessage(message);
         setOpenSnackbar(true);
     };
 
@@ -88,6 +90,7 @@ function Projects() {
                             open={open}
                             onClose={handleClose}
                             project={selectedProject}
+                            onProjectDeleted={() => handleProjectAdded("Project deleted successfully.")}
                         /> 
                     )}
 
@@ -95,7 +98,7 @@ function Projects() {
                         <NewProjectDialog 
                             open={newOpen}
                             onClose={handleNewProjectClose}
-                            onProjectAdded={handleProjectAdded}
+                            onProjectAdded={() => handleProjectAdded("Project added successfully.")}
                         />
                     )}
 
@@ -103,7 +106,7 @@ function Projects() {
                         open={openSnackbar}
                         autoHideDuration={5000}
                         onClose={() => setOpenSnackbar(false)}
-                        message="New project has been added"
+                        message={snackbarMessage}
                     />
                 </Paper>
             </Box>
