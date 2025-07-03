@@ -62,4 +62,15 @@ export async function deleteProject(id: number) {
     };
 
     return;
-}
+};
+
+export async function updateEmployee(id: number, employee: Employee) {
+    const response = await fetch(`${BASE_URL}/api/employees/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify(employee)
+    });
+    return await response.json();
+};

@@ -67,6 +67,7 @@ function NewProjectDialog({ open, onClose, onProjectAdded }: { open: boolean, on
                 />
                 <TextField
                     fullWidth
+                    multiline
                     margin="dense"
                     required
                     label="Description"
