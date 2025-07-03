@@ -96,9 +96,8 @@ function Employees() {
                             onEmployeeUpdated={() => {
                                 setSnackbarMessage("Employee updated successfully");
                                 setOpenSnackbar(true);
-                                // This will trigger the useEffect to refetch
-                                setOpenSnackbar(false); // force re-trigger if needed
-                                setTimeout(() => setOpenSnackbar(true), 0); // ensures effect dependency change
+                                setOpenSnackbar(false);
+                                setTimeout(() => setOpenSnackbar(true), 0);
                             }} 
                         />
                     )}

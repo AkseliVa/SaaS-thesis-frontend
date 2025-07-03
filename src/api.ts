@@ -74,3 +74,14 @@ export async function updateEmployee(id: number, employee: Employee) {
     });
     return await response.json();
 };
+
+export async function updateProject(id: number, project: Project) {
+    const response = await fetch(`${BASE_URL}/api/projects/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify(project)
+    });
+    return await response.json();
+}

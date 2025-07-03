@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 function EmployeeDialog({ open, onClose, employee, onEmployeeDeleted, onEmployeeUpdated }: 
     { open: boolean, onClose: () => void, employee: Employee, onEmployeeDeleted: () => void, onEmployeeUpdated: (updated: Employee) => void }) {
     
-        const [isEdit, setIsEdit] = useState(false);
+    const [isEdit, setIsEdit] = useState(false);
     const [currentEmployee, setCurrentEmployee] = useState<Employee>(employee);
     const [editedEmployee, setEditedEmployee] = useState<Employee>(employee);
 
@@ -42,7 +42,7 @@ function EmployeeDialog({ open, onClose, employee, onEmployeeDeleted, onEmployee
         } catch (err) {
             console.log(err)
         }
-    }
+    };
 
     const handleChange = (event : React.ChangeEvent<HTMLInputElement>) => {
         setEditedEmployee({...editedEmployee, [event.target.name]: event.target.value});
@@ -74,48 +74,48 @@ function EmployeeDialog({ open, onClose, employee, onEmployeeDeleted, onEmployee
                 </>
             ) : (
                 <>
-                <DialogTitle>Edit Employee</DialogTitle>
-                <DialogContent>
-                    <TextField
-                        name="firstname"
-                        label="Firstname" 
-                        variant="outlined"
-                        value={editedEmployee.firstname}
-                        onChange={handleChange}
-                    />
-                    <TextField
-                        name="lastname"
-                        label="Lastname"
-                        variant="outlined"
-                        value={editedEmployee.lastname}
-                        onChange={handleChange}
-                    />
-                    <TextField 
-                        name="role"
-                        label="Role" 
-                        variant="outlined"
-                        value={editedEmployee.role}
-                        onChange={handleChange}
-                    />
-                    <TextField
-                        name="email"
-                        label="Email"
-                        variant="outlined"
-                        value={editedEmployee.email}
-                        onChange={handleChange}
-                    />
-                    <TextField
-                        name="phone"
-                        label="Phone"
-                        variant="outlined"
-                        value={editedEmployee.phone}
-                        onChange={handleChange}
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={saveEmployee}>Save</Button>
-                    <Button onClick={() => setIsEdit(false)}>Cancel</Button>
-                </DialogActions>
+                    <DialogTitle>Edit Employee</DialogTitle>
+                    <DialogContent>
+                        <TextField
+                            name="firstname"
+                            label="Firstname" 
+                            variant="outlined"
+                            value={editedEmployee.firstname}
+                            onChange={handleChange}
+                        />
+                        <TextField
+                            name="lastname"
+                            label="Lastname"
+                            variant="outlined"
+                            value={editedEmployee.lastname}
+                            onChange={handleChange}
+                        />
+                        <TextField 
+                            name="role"
+                            label="Role" 
+                            variant="outlined"
+                            value={editedEmployee.role}
+                            onChange={handleChange}
+                        />
+                        <TextField
+                            name="email"
+                            label="Email"
+                            variant="outlined"
+                            value={editedEmployee.email}
+                            onChange={handleChange}
+                        />
+                        <TextField
+                            name="phone"
+                            label="Phone"
+                            variant="outlined"
+                            value={editedEmployee.phone}
+                            onChange={handleChange}
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={saveEmployee}>Save</Button>
+                        <Button onClick={() => setIsEdit(false)}>Cancel</Button>
+                    </DialogActions>
                 </>
             )}
         </Dialog>

@@ -91,6 +91,12 @@ function Projects() {
                             onClose={handleClose}
                             project={selectedProject}
                             onProjectDeleted={() => handleProjectAdded("Project deleted successfully.")}
+                            onProjectUpdated={() => {
+                                setSnackbarMessage("Employee updated successfully");
+                                setOpenSnackbar(true);
+                                setOpenSnackbar(false);
+                                setTimeout(() => setOpenSnackbar(true), 0);
+                            }} 
                         /> 
                     )}
 
