@@ -67,8 +67,8 @@ function EmployeeDialog({ open, onClose, employee, onEmployeeDeleted, onEmployee
                         )}
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={() => setIsEdit(true)}>Edit</Button>
-                        <Button onClick={removeEmployee}>Delete</Button>
+                        <Button color="secondary" onClick={() => setIsEdit(true)}>Edit</Button>
+                        <Button color="error" onClick={removeEmployee}>Delete</Button>
                         <Button onClick={onClose}>Close</Button>
                     </DialogActions>
                 </>

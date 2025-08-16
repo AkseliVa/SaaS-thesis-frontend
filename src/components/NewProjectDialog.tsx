@@ -17,7 +17,8 @@ function NewProjectDialog({ open, onClose, onProjectAdded }: { open: boolean, on
         company: {
             company_id: 1,
             name: ""
-        }
+        },
+        active: true
     });
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +45,8 @@ function NewProjectDialog({ open, onClose, onProjectAdded }: { open: boolean, on
             company: {
                 company_id: 1,
                 name: ""
-            }
+            },
+            active: false
         });
     };
 

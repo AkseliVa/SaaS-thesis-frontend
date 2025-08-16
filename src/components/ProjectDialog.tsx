@@ -64,8 +64,8 @@ function ProjectDialog({ open, onClose, project, onProjectDeleted, onProjectUpda
                         <Typography>End: {currentProject.endDate}</Typography>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={() => setIsEdit(true)}>Edit</Button>
-                        <Button onClick={removeProject}>Delete</Button>
+                        <Button color="secondary" onClick={() => setIsEdit(true)}>Edit</Button>
+                        <Button color="error" onClick={removeProject}>Delete</Button>
                         <Button onClick={onClose}>Close</Button>
                     </DialogActions>
                 </>

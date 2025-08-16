@@ -18,6 +18,14 @@ export async function fetchCompanies(): Promise<Company[]> {
     return await response.json();
 };
 
+export async function fetchCompany(id: number): Promise<Company> {
+    const response = await fetch(`${BASE_URL}/api/companies/${id}`);
+    if (!response.ok) {
+        throw new Error(`Failed to fetch company with id: ${id} ${response.status}`)
+    };
+    return await response.json();
+};
+
 export async function addEmployee(employee: Employee) {
     const response = await fetch(`${BASE_URL}/api/employees`, {
         method: "POST",

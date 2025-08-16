@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { fetchCompanies } from "../api";
+import { fetchCompany } from "../api";
 import type { Company, Project } from "../types";
 import "../styles/projects.css";
 import { Box, Button, Grid, Paper, Snackbar } from "@mui/material";
@@ -8,7 +8,10 @@ import ProjectDialog from "../components/ProjectDialog";
 import NewProjectDialog from "../components/NewProjectDialog";
 
 function Projects() {
-    const [companyData, setCompanyData] = useState<Company[]>([]);
+    const [companyData, setCompanyData] = useState<Company | null>(null);
+    const [archivedProjects, setArchivedProjects] = useState<Project[]>([]);
+    const [showArchivedProjects, setShowArchivedProjects] = useState(false);
+    const [activeProjects, setActiveProjects] = useState<Project[]>([]);
     const [open, setOpen] = useState(false);
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
     const [newOpen, setNewOpen] = useState(false);
@@ -28,8 +31,10 @@ function Projects() {
     useEffect(() => {
         const fetchCompanyData = async() => {
             try {
-                const data = await fetchCompanies();
+                const data = await fetchCompany(1);
                 setCompanyData(data);
+                setActiveProjects(data.projects?.filter(project => project.active === true) || []);
+                setArchivedProjects(data.projects?.filter(project => !project.active) || []);
             } catch (err) {
                 console.log(err)
             }
@@ -70,10 +75,17 @@ function Projects() {
                 square={false}
             >
                     <h1>Projects</h1>
-                    <Button sx={{ marginBottom: 5}} variant="contained" color="success" onClick={handleNewProjectClick}>New Project</Button>
+                    {!showArchivedProjects ? (
+                        <div>
+                            <Button sx={{ marginBottom: 5}} variant="contained" color="success" onClick={handleNewProjectClick}>New Project</Button>
+                            <Button sx={{ marginBottom: 5, marginLeft: 5}} variant="contained" color="secondary" onClick={() => setShowArchivedProjects(true)}>Archived Projects</Button>
+                        </div>
+                    ) : (
+                        <Button sx={{ marginBottom: 5, marginLeft: 5}} variant="contained" color="secondary" onClick={() => setShowArchivedProjects(false)}>Active Projects</Button>
+                    )}
                     <Grid container spacing={10} sx={{justifyContent: "center", margin: 2}}>
-                        {companyData.length > 0 && 
-                            companyData[0].projects?.map((project: Project) => {
+                        {!showArchivedProjects ? (
+                            (activeProjects?.map((project: Project) => {
                                 return (                   
                                     <ProjectCard
                                         key={project.project_id}
@@ -81,7 +93,18 @@ function Projects() {
                                         onClick={() => handleCardClick(project)}   
                                     />
                                 )
-                            })
+                            }))
+                        ) : (
+                            (archivedProjects?.map((project: Project) => {
+                                return (                   
+                                    <ProjectCard
+                                        key={project.project_id}
+                                        project={project} 
+                                        onClick={() => handleCardClick(project)}   
+                                    />
+                                )
+                            }))
+                        )
                         }
                     </Grid>
 
