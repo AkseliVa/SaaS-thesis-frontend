@@ -62,9 +62,23 @@ function ProjectDialog({ open, onClose, project, onProjectDeleted, onProjectUpda
                         <Typography>{currentProject.description}</Typography>
                         <Typography>Start: {currentProject.startDate}</Typography>
                         <Typography>End: {currentProject.endDate}</Typography>
+                        {currentProject.workers != null && currentProject.workers.length > 0 ? (
+                            <>
+                                <Typography>Workers: </Typography> 
+                                {currentProject.workers.map((worker) => (
+                                    <Typography key={worker.employee_id}>
+                                        {worker.firstname} {worker.lastname}
+                                    </Typography>
+                                ))}
+                            </>
+                        
+            ) : (
+                <Typography>No workers assigned yet</Typography>
+            )}
                     </DialogContent>
                     <DialogActions>
-                        <Button color="secondary" onClick={() => setIsEdit(true)}>Edit</Button>
+                        <Button color="secondary" onClick={() => setIsEdit(true)}>Add workers</Button>
+                        <Button onClick={() => setIsEdit(true)}>Edit</Button>
                         <Button color="error" onClick={removeProject}>Delete</Button>
                         <Button onClick={onClose}>Close</Button>
                     </DialogActions>
