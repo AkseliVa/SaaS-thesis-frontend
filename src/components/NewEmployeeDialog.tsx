@@ -11,10 +11,7 @@ function NewEmployeeDialog({ open, onClose, onEmployeeAdded }: { open: boolean, 
         role: "",
         email: "",
         phone: "",
-        company: {
-            company_id: 1,
-            name: "Hykos"
-        }
+        companyId: 1
     });
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,10 +36,7 @@ function NewEmployeeDialog({ open, onClose, onEmployeeAdded }: { open: boolean, 
             role: "",
             email: "",
             phone: "",
-            company: {
-                company_id: 1,
-                name: ""
-            }
+            companyId: 1
         });
     };
 

@@ -26,18 +26,31 @@ export async function fetchCompany(id: number): Promise<Company> {
     return await response.json();
 };
 
-export async function addEmployee(employee: Employee) {
+export async function addEmployee(employee: {
+    firstname: string;
+    lastname: string;
+    email: string;
+    phone: string;
+    role: string;
+    companyId: number;
+}) {
     const response = await fetch(`${BASE_URL}/api/employees`, {
         method: "POST",
         headers: {
-            "Content-type": "application/json"
+            "Content-Type": "application/json"
         },
         body: JSON.stringify(employee)
     });
     return await response.json();
 };
 
-export async function addProject(project: Project) {
+export async function addProject(project: {
+    name: string,
+    description: string,
+    startDate: string,
+    endDate: string,
+    companyId: number
+}) {
     const response = await fetch(`${BASE_URL}/api/projects`, {
         method: "POST",
         headers: {
@@ -45,6 +58,7 @@ export async function addProject(project: Project) {
         },
         body: JSON.stringify(project)
     });
+    console.log(JSON.stringify(project))
     return await response.json();
 };
 

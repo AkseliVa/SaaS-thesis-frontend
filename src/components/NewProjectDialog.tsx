@@ -14,10 +14,7 @@ function NewProjectDialog({ open, onClose, onProjectAdded }: { open: boolean, on
         description: "",
         startDate: "",
         endDate: "",
-        company: {
-            company_id: 1,
-            name: ""
-        },
+        companyId: 1,
         active: true
     });
 
@@ -27,6 +24,8 @@ function NewProjectDialog({ open, onClose, onProjectAdded }: { open: boolean, on
 
     const handleSave = async () => {
         const { name, description, startDate, endDate } = project;
+
+        project.active = true;
 
         if (!name || !description || !startDate || !endDate) {
             setShowAlert(true);
@@ -42,11 +41,8 @@ function NewProjectDialog({ open, onClose, onProjectAdded }: { open: boolean, on
             description: "",
             startDate: "",
             endDate: "",
-            company: {
-                company_id: 1,
-                name: ""
-            },
-            active: false
+            companyId: 1,
+            active: true
         });
     };
 

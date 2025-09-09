@@ -21,8 +21,10 @@ export type Employee= {
     email: string,
     phone: string,
     role: string,
-    projects?: Project[],
-    company: Company
+    employeesProjects?: [{
+        ep_id: number
+    }],
+    companyId: number
 };
 
 export type Project = {
@@ -31,7 +33,7 @@ export type Project = {
     description: string,
     startDate: string,
     endDate: string,
-    company: Company,
+    companyId: number,
     workers?: Employee[],
     active: boolean
 };

@@ -1,5 +1,5 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle,  TextField, Typography } from "@mui/material";
-import type { Employee, Project } from "../types";
+import type { Employee } from "../types";
 import { deleteEmployee, updateEmployee } from "../api";
 import { useEffect, useState } from "react";
 
@@ -58,10 +58,8 @@ function EmployeeDialog({ open, onClose, employee, onEmployeeDeleted, onEmployee
                         <Typography>{currentEmployee.role}</Typography>
                         <Typography>{currentEmployee.email}</Typography>
                         <Typography>{currentEmployee.phone}</Typography>
-                        {currentEmployee.projects && currentEmployee.projects.length > 0 ? (
-                            currentEmployee.projects.map((project: Project) => (
-                                <Typography>{project.name}</Typography>
-                            ))
+                        {currentEmployee.employeesProjects && currentEmployee.employeesProjects.length > 0 ? (
+                                <Typography>{currentEmployee.employeesProjects[0].ep_id}</Typography>
                         ) : (
                             <Typography>No Projects</Typography>
                         )}
