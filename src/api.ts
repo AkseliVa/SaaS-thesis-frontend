@@ -1,4 +1,4 @@
-import type { Admin, Company, Employee, Project } from "./types";
+import type { Admin, Company, Employee } from "./types";
 
 const BASE_URL="http://localhost:8080"
 
@@ -58,7 +58,6 @@ export async function addProject(project: {
         },
         body: JSON.stringify(project)
     });
-    console.log(JSON.stringify(project))
     return await response.json();
 };
 
@@ -97,7 +96,14 @@ export async function updateEmployee(id: number, employee: Employee) {
     return await response.json();
 };
 
-export async function updateProject(id: number, project: Project) {
+export async function updateProject(id: number, project: {
+    name: string,
+    description: string,
+    startDate: string,
+    endDate: string,
+    companyId: number,
+    active: boolean
+}) {
     const response = await fetch(`${BASE_URL}/api/projects/${id}`, {
         method: "PUT",
         headers: {

@@ -37,16 +37,35 @@ function ProjectDialog({ open, onClose, project, onProjectDeleted, onProjectUpda
             try {
                 if (project.project_id !== undefined) {
                     const updated = await updateProject(project.project_id, editedProject);
-                    setCurrentProject(updated);
+                    console.log(updated)
+                    setCurrentProject(editedProject);
                     setIsEdit(false);
                     onProjectUpdated(updated);
                 } else {
-                    console.error("Cannot update employee: employee_id is undefined");
+                    console.error("Cannot update project: project_id is undefined");
                 }
             } catch (err) {
                 console.log(err)
             }
         };
+
+        const changeProjectStatus = async (status: boolean) => {
+            try {
+                if (currentProject.project_id !== undefined) {
+                const updated = await updateProject(currentProject.project_id, {
+                    ...currentProject,
+                    active: status
+                });
+                setCurrentProject(updated);
+                onProjectUpdated(updated);
+                } else {
+                    console.error("Cannot archive project: project_id is undefined");
+                }
+            } catch (err) {
+                console.error(err);
+            }
+            };
+
     
         const handleChange = (event : React.ChangeEvent<HTMLInputElement>) => {
             setEditedProject({...editedProject, [event.target.name]: event.target.value});
@@ -78,6 +97,11 @@ function ProjectDialog({ open, onClose, project, onProjectDeleted, onProjectUpda
                     </DialogContent>
                     <DialogActions>
                         <Button color="secondary" onClick={() => setIsEdit(true)}>Add workers</Button>
+                        {currentProject.active == true ? (
+                            <Button color="error" onClick={() => changeProjectStatus(false)}>Archive</Button>
+                        ) : (
+                            <Button color="error" onClick={() => changeProjectStatus(true)}>Activate</Button>
+                        )}
                         <Button onClick={() => setIsEdit(true)}>Edit</Button>
                         <Button color="error" onClick={removeProject}>Delete</Button>
                         <Button onClick={onClose}>Close</Button>
