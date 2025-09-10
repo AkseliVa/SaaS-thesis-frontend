@@ -85,7 +85,14 @@ export async function deleteProject(id: number) {
     return;
 };
 
-export async function updateEmployee(id: number, employee: Employee) {
+export async function updateEmployee(id: number, employee:{
+    firstname: string;
+    lastname: string;
+    email: string;
+    phone: string;
+    role: string;
+    companyId: number;
+}) {
     const response = await fetch(`${BASE_URL}/api/employees/${id}`, {
         method: "PUT",
         headers: {
