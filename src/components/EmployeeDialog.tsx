@@ -58,11 +58,19 @@ function EmployeeDialog({ open, onClose, employee, onEmployeeDeleted, onEmployee
                         <Typography>{currentEmployee.role}</Typography>
                         <Typography>{currentEmployee.email}</Typography>
                         <Typography>{currentEmployee.phone}</Typography>
-                        {currentEmployee.employeesProjects && currentEmployee.employeesProjects.length > 0 ? (
-                                <Typography>{currentEmployee.employeesProjects[0].ep_id}</Typography>
-                        ) : (
-                            <Typography>No Projects</Typography>
-                        )}
+                        {currentEmployee.projects != null && currentEmployee.projects.length > 0 ? (
+                            <>
+                                <Typography>Projects: </Typography> 
+                                {currentEmployee.projects.map((project) => (
+                                    <Typography key={project.project_id}>
+                                        {project.name}
+                                    </Typography>
+                                ))}
+                            </>
+                        
+            ) : (
+                <Typography>No projects assigned yet</Typography>
+            )}
                     </DialogContent>
                     <DialogActions>
                         <Button color="secondary" onClick={() => setIsEdit(true)}>Edit</Button>

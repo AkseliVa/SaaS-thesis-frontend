@@ -1,4 +1,4 @@
-import type { Admin, Company, Employee } from "./types";
+import type { Admin, Company } from "./types";
 
 const BASE_URL="http://localhost:8080"
 

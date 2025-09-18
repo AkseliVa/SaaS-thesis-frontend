@@ -37,10 +37,10 @@ function ProjectDialog({ open, onClose, project, onProjectDeleted, onProjectUpda
             try {
                 if (project.project_id !== undefined) {
                     const updated = await updateProject(project.project_id, editedProject);
-                    console.log(updated)
                     setCurrentProject(editedProject);
                     setIsEdit(false);
                     onProjectUpdated(updated);
+                    onClose();
                 } else {
                     console.error("Cannot update project: project_id is undefined");
                 }
@@ -58,6 +58,7 @@ function ProjectDialog({ open, onClose, project, onProjectDeleted, onProjectUpda
                 });
                 setCurrentProject(updated);
                 onProjectUpdated(updated);
+                onClose();
                 } else {
                     console.error("Cannot archive project: project_id is undefined");
                 }
@@ -81,11 +82,11 @@ function ProjectDialog({ open, onClose, project, onProjectDeleted, onProjectUpda
                         <Typography>{currentProject.description}</Typography>
                         <Typography>Start: {currentProject.startDate}</Typography>
                         <Typography>End: {currentProject.endDate}</Typography>
-                        {currentProject.workers != null && currentProject.workers.length > 0 ? (
+                        {currentProject.employees != null && currentProject.employees.length > 0 ? (
                             <>
                                 <Typography>Workers: </Typography> 
-                                {currentProject.workers.map((worker) => (
-                                    <Typography key={worker.employee_id}>
+                                {currentProject.employees.map((worker) => (
+                                    <Typography key={worker.pe_id}>
                                         {worker.firstname} {worker.lastname}
                                     </Typography>
                                 ))}

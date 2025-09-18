@@ -5,18 +5,18 @@ import calendar from "../assets/images/calendar.jpg";
 import "../styles/dashboard.css"
 import { Grid } from "@mui/material";
 import { useEffect, useState } from "react";
-import { fetchEverything } from "../api";
+import { fetchCompany } from "../api";
 
-import type { Admin } from "../types";
+import type { Company } from "../types";
 
 function Dashboard() {
-    const [adminData, setAdminData] = useState<Admin[]>([]);
+    const [companyData, setCompanyData] = useState<Company>();
 
     useEffect(() => {
         const fetchAdminData = async() => {
             try {
-                const data = await fetchEverything();
-                setAdminData(data);
+                const data = await fetchCompany(1);
+                setCompanyData(data);
             } catch (err) {
                 console.log(err)
             }
@@ -24,13 +24,13 @@ function Dashboard() {
         fetchAdminData();
     }, []);
 
-    console.log(adminData);
+    console.log(companyData);
 
     return (
         <>
-            {adminData.length > 0 && 
+            {companyData && 
                 <div className="container">
-                    <h1 className="heading">{adminData[0].company.name}</h1>           
+                    <h1 className="heading">{companyData.name}</h1>           
                     <h2>Dashboard</h2>
                     <Grid container spacing={20}>
                         <DashboardCard 
