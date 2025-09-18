@@ -113,6 +113,7 @@ function Projects() {
                             open={open}
                             onClose={handleClose}
                             project={selectedProject}
+                            employees={companyData?.employees || null}
                             onProjectDeleted={() => handleProjectAdded("Project deleted successfully.")}
                             onProjectUpdated={() => {
                                 setSnackbarMessage("Project updated successfully");

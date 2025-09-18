@@ -92,6 +92,7 @@ function Employees() {
                             open={infoOpen}
                             onClose={handleInfoClose}
                             employee={selectedEmployee}
+                            projects={companyData[0].projects || null}
                             onEmployeeDeleted={() => handleEmployeeAdded("Employee deleted successfully")}
                             onEmployeeUpdated={() => {
                                 setSnackbarMessage("Employee updated successfully");

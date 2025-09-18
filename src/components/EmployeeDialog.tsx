@@ -1,19 +1,26 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle,  TextField, Typography } from "@mui/material";
-import type { Employee } from "../types";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle,  InputLabel,  TextField, Typography } from "@mui/material";
+import type { Employee, Project } from "../types";
 import { deleteEmployee, updateEmployee } from "../api";
 import { useEffect, useState } from "react";
 
-function EmployeeDialog({ open, onClose, employee, onEmployeeDeleted, onEmployeeUpdated }: 
-    { open: boolean, onClose: () => void, employee: Employee, onEmployeeDeleted: () => void, onEmployeeUpdated: (updated: Employee) => void }) {
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+
+function EmployeeDialog({ open, onClose, employee, projects, onEmployeeDeleted, onEmployeeUpdated }: 
+    { open: boolean, onClose: () => void, employee: Employee, projects: Project[] | null, onEmployeeDeleted: () => void, onEmployeeUpdated: (updated: Employee) => void }) {
     
     const [isEdit, setIsEdit] = useState(false);
     const [currentEmployee, setCurrentEmployee] = useState<Employee>(employee);
     const [editedEmployee, setEditedEmployee] = useState<Employee>(employee);
+    const [addedProject, setAddedProject] = useState<Project>();
 
     useEffect(() => {
         setCurrentEmployee(employee);
         setEditedEmployee(employee);
     }, [employee]);
+
+    console.log(projects)
 
     const removeEmployee = async () => {
         try {
@@ -73,6 +80,18 @@ function EmployeeDialog({ open, onClose, employee, onEmployeeDeleted, onEmployee
             )}
                     </DialogContent>
                     <DialogActions>
+                        <Box sx={{ minWidth: 140 }}>
+                            <FormControl fullWidth>
+                                <InputLabel id="projects-id">Projects</InputLabel>
+                                    <Select
+                                        value={addedProject}
+                                    >
+                                        {projects?.map((project) => (
+                                            <MenuItem>{project.name}</MenuItem>
+                                        ))}
+                                    </Select>
+                            </FormControl>
+                        </Box>
                         <Button color="secondary" onClick={() => setIsEdit(true)}>Edit</Button>
                         <Button color="error" onClick={removeEmployee}>Delete</Button>
                         <Button onClick={onClose}>Close</Button>

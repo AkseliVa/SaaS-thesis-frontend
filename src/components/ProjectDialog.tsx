@@ -1,5 +1,5 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography } from "@mui/material";
-import type { Project } from "../types";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
+import type { Employee, Project } from "../types";
 import { deleteProject, updateProject } from "../api";
 import { useEffect, useState } from "react";
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
@@ -7,12 +7,13 @@ import dayjs from 'dayjs';
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
-function ProjectDialog({ open, onClose, project, onProjectDeleted, onProjectUpdated }: 
-    { open: boolean, onClose: () => void, project: Project, onProjectDeleted: () => void, onProjectUpdated: (updated: Project) => void }) {
+function ProjectDialog({ open, onClose, project, employees, onProjectDeleted, onProjectUpdated }: 
+    { open: boolean, onClose: () => void, project: Project, employees: Employee[] | null, onProjectDeleted: () => void, onProjectUpdated: (updated: Project) => void }) {
     
     const [isEdit, setIsEdit] = useState(false);
     const [currentProject, setCurrentProject] = useState<Project>(project);
     const [editedProject, setEditedProject] = useState<Project>(project);
+    const [addedEmployee, setAddedEmployee] = useState<Employee>();
 
     useEffect(() => {
             setCurrentProject(project);
@@ -97,7 +98,18 @@ function ProjectDialog({ open, onClose, project, onProjectDeleted, onProjectUpda
             )}
                     </DialogContent>
                     <DialogActions>
-                        <Button color="secondary" onClick={() => setIsEdit(true)}>Add workers</Button>
+                        <Box sx={{ minWidth: 140 }}>
+                            <FormControl fullWidth>
+                                <InputLabel id="employees-id">Employees</InputLabel>
+                                    <Select
+                                        value={addedEmployee}
+                                    >
+                                        {employees?.map((employee) => (
+                                            <MenuItem>{employee.firstname} {employee.lastname}</MenuItem>
+                                        ))}
+                                    </Select>
+                            </FormControl>
+                        </Box>
                         {currentProject.active == true ? (
                             <Button color="error" onClick={() => changeProjectStatus(false)}>Archive</Button>
                         ) : (
