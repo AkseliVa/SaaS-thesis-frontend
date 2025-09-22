@@ -21,15 +21,12 @@ export type Employee= {
     email: string,
     phone: string,
     role: string,
-    projects?: [{
-        project_id: number,
-        name: string
-    }],
+    projects?: Project[]
     companyId: number
 };
 
 export type Project = {
-    project_id?: number,
+    project_id: number,
     name: string,
     description: string,
     startDate: string,

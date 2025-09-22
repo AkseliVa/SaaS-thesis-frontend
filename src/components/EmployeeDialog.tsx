@@ -1,4 +1,4 @@
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle,  InputLabel,  TextField, Typography } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle,  InputLabel,  TextField, Typography } from "@mui/material";
 import type { Employee, Project } from "../types";
 import { deleteEmployee, updateEmployee } from "../api";
 import { useEffect, useState } from "react";
@@ -13,7 +13,6 @@ function EmployeeDialog({ open, onClose, employee, projects, onEmployeeDeleted, 
     const [isEdit, setIsEdit] = useState(false);
     const [currentEmployee, setCurrentEmployee] = useState<Employee>(employee);
     const [editedEmployee, setEditedEmployee] = useState<Employee>(employee);
-    const [addedProject, setAddedProject] = useState<Project>();
 
     useEffect(() => {
         setCurrentEmployee(employee);
@@ -80,18 +79,6 @@ function EmployeeDialog({ open, onClose, employee, projects, onEmployeeDeleted, 
             )}
                     </DialogContent>
                     <DialogActions>
-                        <Box sx={{ minWidth: 140 }}>
-                            <FormControl fullWidth>
-                                <InputLabel id="projects-id">Projects</InputLabel>
-                                    <Select
-                                        value={addedProject}
-                                    >
-                                        {projects?.map((project) => (
-                                            <MenuItem>{project.name}</MenuItem>
-                                        ))}
-                                    </Select>
-                            </FormControl>
-                        </Box>
                         <Button color="secondary" onClick={() => setIsEdit(true)}>Edit</Button>
                         <Button color="error" onClick={removeEmployee}>Delete</Button>
                         <Button onClick={onClose}>Close</Button>
@@ -136,6 +123,31 @@ function EmployeeDialog({ open, onClose, employee, projects, onEmployeeDeleted, 
                             value={editedEmployee.phone}
                             onChange={handleChange}
                         />
+                        <FormControl fullWidth>
+                            <InputLabel id="projects-id">Projects</InputLabel>
+                            <Select
+                                multiple
+                                labelId="projects-id"
+                                value={editedEmployee.projects?.map(p => p.project_id) ?? []}
+                                onChange={(e) => {
+                                const selectedIds = e.target.value as number[] | undefined;
+                                const selectedProjects = projects?.filter(p =>
+                                    selectedIds?.includes(p.project_id)
+                                ) ?? [];
+                                setEditedEmployee({ ...editedEmployee, projects: selectedProjects });
+                                }}
+                                renderValue={(selected) => {
+                                const ids = selected as number[];
+                                return ids.map(id => projects?.find(p => p.project_id === id)?.name).join(", ");
+                                }}
+                            >
+                                {projects?.map((project) => (
+                                <MenuItem key={project.project_id} value={project.project_id}>
+                                    {project.name}
+                                </MenuItem>
+                                ))}
+                            </Select>
+                            </FormControl>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={saveEmployee}>Save</Button>
