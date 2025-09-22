@@ -1,4 +1,4 @@
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import type { Employee, Project } from "../types";
 import { deleteProject, updateProject } from "../api";
 import { useEffect, useState } from "react";
@@ -13,7 +13,6 @@ function ProjectDialog({ open, onClose, project, employees, onProjectDeleted, on
     const [isEdit, setIsEdit] = useState(false);
     const [currentProject, setCurrentProject] = useState<Project>(project);
     const [editedProject, setEditedProject] = useState<Project>(project);
-    const [addedEmployee, setAddedEmployee] = useState<Employee>();
 
     useEffect(() => {
             setCurrentProject(project);
@@ -41,7 +40,6 @@ function ProjectDialog({ open, onClose, project, employees, onProjectDeleted, on
                     setCurrentProject(editedProject);
                     setIsEdit(false);
                     onProjectUpdated(updated);
-                    onClose();
                 } else {
                     console.error("Cannot update project: project_id is undefined");
                 }
@@ -87,7 +85,7 @@ function ProjectDialog({ open, onClose, project, employees, onProjectDeleted, on
                             <>
                                 <Typography>Workers: </Typography> 
                                 {currentProject.employees.map((worker) => (
-                                    <Typography key={worker.pe_id}>
+                                    <Typography key={worker.employee_id}>
                                         {worker.firstname} {worker.lastname}
                                     </Typography>
                                 ))}
@@ -98,18 +96,6 @@ function ProjectDialog({ open, onClose, project, employees, onProjectDeleted, on
             )}
                     </DialogContent>
                     <DialogActions>
-                        <Box sx={{ minWidth: 140 }}>
-                            <FormControl fullWidth>
-                                <InputLabel id="employees-id">Employees</InputLabel>
-                                    <Select
-                                        value={addedEmployee}
-                                    >
-                                        {employees?.map((employee) => (
-                                            <MenuItem>{employee.firstname} {employee.lastname}</MenuItem>
-                                        ))}
-                                    </Select>
-                            </FormControl>
-                        </Box>
                         {currentProject.active == true ? (
                             <Button color="error" onClick={() => changeProjectStatus(false)}>Archive</Button>
                         ) : (
@@ -164,6 +150,31 @@ function ProjectDialog({ open, onClose, project, employees, onProjectDeleted, on
                                 slotProps={{ textField: { fullWidth: true, margin: "dense", required: true } }}
                             />
                         </LocalizationProvider>
+                        <FormControl fullWidth>
+                            <InputLabel id="employees-id">Employees</InputLabel>
+                            <Select
+                                multiple
+                                labelId="employees-id"
+                                value={editedProject.employees?.map(e => e.employee_id) ?? []}
+                                onChange={(e) => {
+                                const selectedIds = e.target.value as number[] | undefined;
+                                const selectedEmployees = employees?.filter(e =>
+                                    selectedIds?.includes(e.employee_id)
+                                ) ?? [];
+                                setEditedProject({ ...editedProject, employees: selectedEmployees });
+                                }}
+                                renderValue={(selected) => {
+                                const ids = selected as number[];
+                                return ids.map(id => employees?.find(e => e.employee_id === id)?.firstname).join(", ");
+                                }}
+                            >
+                                {employees?.map((employee) => (
+                                <MenuItem key={employee.employee_id} value={employee.employee_id}>
+                                    {employee.firstname} {employee.lastname}
+                                </MenuItem>
+                                ))}
+                            </Select>
+                            </FormControl>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={saveProject}>Save</Button>

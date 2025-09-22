@@ -32,7 +32,7 @@ export async function addEmployee(employee: {
     email: string;
     phone: string;
     role: string;
-    companyId: number;
+    company_id: number;
 }) {
     const response = await fetch(`${BASE_URL}/api/employees`, {
         method: "POST",
@@ -49,7 +49,7 @@ export async function addProject(project: {
     description: string,
     startDate: string,
     endDate: string,
-    companyId: number
+    company_id: number
 }) {
     const response = await fetch(`${BASE_URL}/api/projects`, {
         method: "POST",
@@ -58,6 +58,8 @@ export async function addProject(project: {
         },
         body: JSON.stringify(project)
     });
+    console.log("sent project: ")
+    console.log(project)
     return await response.json();
 };
 
@@ -91,7 +93,7 @@ export async function updateEmployee(id: number, employee:{
     email: string;
     phone: string;
     role: string;
-    companyId: number;
+    company_id: number;
 }) {
     const response = await fetch(`${BASE_URL}/api/employees/${id}`, {
         method: "PUT",
@@ -108,7 +110,7 @@ export async function updateProject(id: number, project: {
     description: string,
     startDate: string,
     endDate: string,
-    companyId: number,
+    company_id: number,
     active: boolean
 }) {
     const response = await fetch(`${BASE_URL}/api/projects/${id}`, {

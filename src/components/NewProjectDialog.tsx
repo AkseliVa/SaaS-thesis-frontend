@@ -10,11 +10,12 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 function NewProjectDialog({ open, onClose, onProjectAdded }: { open: boolean, onClose: () => void, onProjectAdded: () => void }) {
     const [showAlert, setShowAlert] = useState(false);
     const [project, setProject] = useState<Project>({
+        project_id: 0,
         name: "",
         description: "",
         startDate: "",
         endDate: "",
-        companyId: 1,
+        company_id: 1,
         active: true
     });
 
@@ -37,11 +38,12 @@ function NewProjectDialog({ open, onClose, onProjectAdded }: { open: boolean, on
         onProjectAdded();
         onClose();
         setProject({
+            project_id: 0,
             name: "",
             description: "",
             startDate: "",
             endDate: "",
-            companyId: 1,
+            company_id: 1,
             active: true
         });
     };

@@ -15,14 +15,14 @@ export type Company = {
 };
 
 export type Employee= {
-    employee_id?: number,
+    employee_id: number,
     firstname: string,
     lastname: string,
     email: string,
     phone: string,
     role: string,
     projects?: Project[]
-    companyId: number
+    company_id: number
 };
 
 export type Project = {
@@ -31,11 +31,7 @@ export type Project = {
     description: string,
     startDate: string,
     endDate: string,
-    companyId: number,
-    employees?: [{
-        pe_id: number,
-        firstname: string,
-        lastname: string
-    }],
+    company_id: number,
+    employees?: Employee[],
     active: boolean
 };

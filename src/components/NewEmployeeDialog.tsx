@@ -6,12 +6,13 @@ import { addEmployee } from "../api";
 function NewEmployeeDialog({ open, onClose, onEmployeeAdded }: { open: boolean, onClose: () => void, onEmployeeAdded: () => void }) {
     const [showAlert, setShowAlert] = useState(false);
     const [employee, setEmployee] = useState<Employee>({
+        employee_id: 0,
         firstname: "",
         lastname: "",
         role: "",
         email: "",
         phone: "",
-        companyId: 1
+        company_id: 1
     });
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,12 +32,13 @@ function NewEmployeeDialog({ open, onClose, onEmployeeAdded }: { open: boolean, 
         onEmployeeAdded();
         onClose();
         setEmployee({
+            employee_id: 0,
             firstname: "",
             lastname: "",
             role: "",
             email: "",
             phone: "",
-            companyId: 1
+            company_id: 1
         });
     };
 
