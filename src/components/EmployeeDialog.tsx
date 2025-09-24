@@ -19,8 +19,6 @@ function EmployeeDialog({ open, onClose, employee, projects, onEmployeeDeleted, 
         setEditedEmployee(employee);
     }, [employee]);
 
-    console.log(projects)
-
     const removeEmployee = async () => {
         try {
             if (employee.employee_id !== undefined) {
