@@ -74,6 +74,7 @@ function Projects() {
                     flex: 1,
                     margin: 2,
                     padding: 5,
+                    minHeight: 460
                 }}
                 elevation={20}
                 square={false}
@@ -99,6 +100,7 @@ function Projects() {
                                 )
                             }))
                         ) : (
+                            (archivedProjects.length > 0 ? (
                             (archivedProjects?.map((project: Project) => {
                                 return (                   
                                     <ProjectCard
@@ -108,6 +110,9 @@ function Projects() {
                                     />
                                 )
                             }))
+                        ) : (
+                            <h2>No archived projects</h2>
+                        ))
                         )
                         }
                     </Grid>
