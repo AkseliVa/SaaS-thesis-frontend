@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { fetchCompany } from "../api";
 import type { Company, Project } from "../types";
-import "../styles/projects.css";
 import { Box, Button, Grid, Paper, Snackbar } from "@mui/material";
 import ProjectCard from "../components/ProjectCard";
 import ProjectDialog from "../components/ProjectDialog";
 import NewProjectDialog from "../components/NewProjectDialog";
+import Calendar from "./Calendar";
 
 function Projects() {
     const [companyData, setCompanyData] = useState<Company | null>(null);
@@ -60,16 +60,20 @@ function Projects() {
     return (
         <Box
             sx={{
-                justifyContent: "center",
-                alignItems: "center",
-                margin: 10
+                display: "flex",
+                justifyContent: "space-between", 
+                alignItems: "flex-start",        
+                width: "88vw",                  
+                height: "76vh",                 
+                margin: 10,                       
+                boxSizing: "border-box",
             }}
         >
             <Paper 
                 sx={{
-                    padding: 10,
+                    flex: 1,
                     margin: 2,
-                    boxSizing: "border-box"
+                    padding: 5,
                 }}
                 elevation={20}
                 square={false}
@@ -138,6 +142,17 @@ function Projects() {
                         onClose={() => setOpenSnackbar(false)}
                         message={snackbarMessage}
                     />
+                </Paper>
+                <Paper
+                    sx={{
+                        flex: 1,
+                        margin: 2,
+                        padding: 5,
+                    }}
+                    elevation={20}
+                    square={false}
+                >
+                    <Calendar openSnackbar={openSnackbar} />
                 </Paper>
             </Box>
     )
