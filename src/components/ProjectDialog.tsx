@@ -128,10 +128,10 @@ function ProjectDialog({ open, onClose, project, employees, onProjectDeleted, on
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DesktopDatePicker
                                 label="Start Date"
-                                value={project.startDate ? dayjs(project.startDate) : null}
+                                value={editedProject.startDate ? dayjs(editedProject.startDate) : null}
                                 onChange={(value) => {
                                 setEditedProject({
-                                    ...project,
+                                    ...editedProject,
                                     startDate: value ? dayjs(value).format("YYYY-MM-DD") : "",
                                 });
                                 }}
@@ -140,10 +140,10 @@ function ProjectDialog({ open, onClose, project, employees, onProjectDeleted, on
 
                             <DesktopDatePicker
                                 label="End Date"
-                                value={project.endDate ? dayjs(project.endDate) : null}
+                                value={editedProject.endDate ? dayjs(editedProject.endDate) : null}
                                 onChange={(value) => {
                                 setEditedProject({
-                                    ...project,
+                                    ...editedProject,
                                     endDate: value ? dayjs(value).format("YYYY-MM-DD") : "",
                                 });
                                 }}
