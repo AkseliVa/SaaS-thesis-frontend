@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard.tsx';
 import Employees from './pages/Employees.tsx';
 import Projects from './pages/Projects.tsx';
 import Calendar from './pages/Calendar.tsx';
+import Customers from './pages/Customers.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
@@ -14,6 +15,7 @@ createRoot(document.getElementById('root')!).render(
       <Route path="employees" element={<Employees />} />
       <Route path="projects" element={<Projects />} />
       <Route path="calendar" element={<Calendar />} />
+      <Route path="customers" element={<Customers />} />
     </Routes>
   </BrowserRouter>,
 )
