@@ -1,26 +1,55 @@
 import { useEffect, useState } from "react";
 import { fetchCompanies } from "../api";
 import type { Company, Customer } from "../types";
-import { Box, Paper } from "@mui/material";
+import { Box, Button, Grid, Paper, Snackbar } from "@mui/material";
+import CustomerCard from "../components/CustomerCard";
+import CustomerDialog from "../components/CustomerDialog";
+import NewCustomerDialog from "../components/NewCustomerDialog";
 
 function Customers() {
     const [companyData, setCompanyData] = useState<Company[]>([]);
-    const [customers, setCustomers] = useState<Customer[] | null>([]);
-
-    useEffect(() => {
+    const [infoOpen, setInfoOpen] = useState(false);
+    const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
+    const [newOpen, setNewOpen] = useState(false);
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState<string>("");
+    
+        useEffect(() => {
             const fetchCompanyData = async() => {
                 try {
                     const data = await fetchCompanies();
                     setCompanyData(data);
-                    setCustomers(data[0].customers || null)
                 } catch (err) {
                     console.log(err)
                 }
             };
             fetchCompanyData();
-        }, []);
-
-        console.log(customers)
+        }, [openSnackbar]);
+        
+        console.log(companyData);
+    
+        const handleInfoCardClick = (customer: Customer) => {
+            setSelectedCustomer(customer);
+            setInfoOpen(true);
+        };
+    
+        const handleInfoClose = () => {
+            setInfoOpen(false);
+            setSelectedCustomer(null);
+        };
+    
+        const handleNewCustomerClick = () => {
+            setNewOpen(true);
+        };
+    
+        const handleNewCustomerClose = () => {
+            setNewOpen(false);
+        };
+    
+        const handleCustomerAdded = (message: string) => {
+            setSnackbarMessage(message)
+            setOpenSnackbar(true);
+        };
 
     return (
         <Box
@@ -40,13 +69,51 @@ function Customers() {
                 square={false}
             >
                 <h1>Customers</h1>
-                    {companyData.length > 0 && 
-                        companyData[0].customers?.map((customer: Customer) => {
-                            return (                   
-                                <h3>{customer.name}</h3>
-                            )
-                        })
-                    }
+                    <Button sx={{ marginBottom: 5}} variant="contained" color="success" onClick={handleNewCustomerClick}>New Customer</Button>
+                    <Grid container spacing={10} sx={{justifyContent: "center", margin: 2}}>
+                        {companyData.length > 0 && 
+                            companyData[0].customers?.map((customer: Customer) => {
+                                return (                   
+                                    <CustomerCard
+                                        key={customer.customer_id}
+                                        customer={customer}
+                                        onClick={() => handleInfoCardClick(customer)}    
+                                    />
+                                )
+                            })
+                        }
+                    </Grid>
+
+                    {selectedCustomer && (
+                        <CustomerDialog 
+                            open={infoOpen}
+                            onClose={handleInfoClose}
+                            customer={selectedCustomer}
+                            onCustomerDeleted={() => handleCustomerAdded("Customer deleted successfully")}
+                            onCustomerUpdated={(updated) => {
+                                setSelectedCustomer(updated)
+                                setSnackbarMessage("Customer updated successfully");
+                                setOpenSnackbar(true);
+                                setOpenSnackbar(false);
+                                setTimeout(() => setOpenSnackbar(true), 0);
+                            }} 
+                        />
+                    )}
+
+                    {newOpen && (
+                        <NewCustomerDialog 
+                            open={newOpen}
+                            onClose={handleNewCustomerClose}
+                            onCustomerAdded={() => handleCustomerAdded("Customer added successfully")}
+                        />
+                    )}
+
+                    <Snackbar
+                        open={openSnackbar}
+                        autoHideDuration={5000}
+                        onClose={() => setOpenSnackbar(false)}
+                        message={snackbarMessage}
+                    />
             </Paper>
         </Box>
     )

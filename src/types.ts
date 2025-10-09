@@ -32,6 +32,8 @@ export interface Customer {
   contactPerson?: string;
   contactEmail?: string;
   contactPhone?: string;
+  customerManager?: Employee;
+  company?: { company_id: number };
 }
 
 export interface Project {
