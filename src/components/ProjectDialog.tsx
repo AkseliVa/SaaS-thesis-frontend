@@ -78,6 +78,11 @@ function ProjectDialog({ open, onClose, project, employees, onProjectDeleted, on
                 <>
                     <DialogTitle>{currentProject.name}</DialogTitle>
                     <DialogContent>
+                        {currentProject.customer ? (
+                            <Typography>{currentProject.customer.name}</Typography>
+                        ) : (
+                            <Typography>No customer</Typography>
+                        )}
                         <Typography>{currentProject.description}</Typography>
                         <Typography>Start: {currentProject.startDate}</Typography>
                         <Typography>End: {currentProject.endDate}</Typography>

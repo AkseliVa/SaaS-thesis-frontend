@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { fetchCompany } from "../api";
-import type { Company, Project } from "../types";
+import type { Company, Customer, Project } from "../types";
 import { Box, Button, Grid, Paper, Snackbar } from "@mui/material";
 import ProjectCard from "../components/ProjectCard";
 import ProjectDialog from "../components/ProjectDialog";
@@ -9,6 +9,7 @@ import Calendar from "./Calendar";
 
 function Projects() {
     const [companyData, setCompanyData] = useState<Company | null>(null);
+    const [customers, setCustomers] = useState<Customer[]>([]);
     const [archivedProjects, setArchivedProjects] = useState<Project[]>([]);
     const [showArchivedProjects, setShowArchivedProjects] = useState(false);
     const [activeProjects, setActiveProjects] = useState<Project[]>([]);
@@ -35,6 +36,9 @@ function Projects() {
                 setCompanyData(data);
                 setActiveProjects(data.projects?.filter(project => project.active === true) || []);
                 setArchivedProjects(data.projects?.filter(project => !project.active) || []);
+                if (data.customers != undefined) {
+                    setCustomers(data.customers)
+                }
             } catch (err) {
                 console.log(err)
             }
@@ -138,6 +142,8 @@ function Projects() {
                             open={newOpen}
                             onClose={handleNewProjectClose}
                             onProjectAdded={() => handleProjectAdded("Project added successfully.")}
+                            customers={customers}
+
                         />
                     )}
 

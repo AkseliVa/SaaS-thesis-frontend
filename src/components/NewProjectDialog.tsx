@@ -1,5 +1,5 @@
-import { Alert, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
-import type { Project } from "../types";
+import { Alert, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import type { Customer, Project } from "../types";
 import { useState } from "react";
 import { addProject } from "../api";
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
-function NewProjectDialog({ open, onClose, onProjectAdded }: { open: boolean, onClose: () => void, onProjectAdded: () => void }) {
+function NewProjectDialog({ open, onClose, onProjectAdded, customers }: { open: boolean, onClose: () => void, onProjectAdded: () => void, customers: Customer[] }) {
     const [showAlert, setShowAlert] = useState(false);
     const [project, setProject] = useState<Project>({
         project_id: 0,
@@ -16,7 +16,8 @@ function NewProjectDialog({ open, onClose, onProjectAdded }: { open: boolean, on
         startDate: "",
         endDate: "",
         company_id: 1,
-        active: true
+        active: true,
+        customer: null
     });
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,11 +25,11 @@ function NewProjectDialog({ open, onClose, onProjectAdded }: { open: boolean, on
     };
 
     const handleSave = async () => {
-        const { name, description, startDate, endDate } = project;
+        const { name, description, startDate, endDate, customer } = project;
 
         project.active = true;
 
-        if (!name || !description || !startDate || !endDate) {
+        if (!name || !description || !startDate || !endDate || !customer) {
             setShowAlert(true);
             return;
         }
@@ -44,7 +45,8 @@ function NewProjectDialog({ open, onClose, onProjectAdded }: { open: boolean, on
             startDate: "",
             endDate: "",
             company_id: 1,
-            active: true
+            active: true,
+            customer: null
         });
     };
 
@@ -57,6 +59,25 @@ function NewProjectDialog({ open, onClose, onProjectAdded }: { open: boolean, on
                         Please fill in all the fields.
                     </Alert>
                 )}
+                <FormControl fullWidth>
+                    <InputLabel id="customer-id">Customer</InputLabel>
+                    <Select
+                        labelId="customer-id"
+                        value={project.customer ? project.customer.customer_id : ""}
+                        onChange={(e) => {
+                            const selectedCustomer = customers.find(
+                                (c) => c.customer_id === e.target.value
+                            );
+                            setProject({ ...project, customer: selectedCustomer || null });
+                        }}
+                    >
+                        {customers?.map((customer) => (
+                            <MenuItem key={customer.customer_id} value={customer.customer_id}>
+                                {customer.name}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
                 <TextField
                     fullWidth
                     margin="dense"

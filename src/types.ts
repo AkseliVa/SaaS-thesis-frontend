@@ -26,25 +26,22 @@ export type Employee= {
     company_id: number
 };
 
-export type Project = {
-    project_id: number,
-    name: string,
-    description: string,
-    startDate: string,
-    endDate: string,
-    company_id: number,
-    employees?: Employee[],
-    active: boolean,
-    customer: Customer
-};
+export interface Customer {
+  customer_id: number;
+  name: string;
+  contactPerson?: string;
+  contactEmail?: string;
+  contactPhone?: string;
+}
 
-export type Customer = {
-    customer_id: number,
-    name: string,
-    contactPerson: string,
-    contactEmail: string,
-    contactPhone: string,
-    projects: Project[],
-    customerManager: Employee,
-    company_id: number
-};
+export interface Project {
+  project_id: number;
+  name: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+  active: boolean;
+  company_id: number;
+  customer: Customer | null;
+  employees?: Employee[];
+}

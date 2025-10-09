@@ -1,4 +1,4 @@
-import type { Admin, Company } from "./types";
+import type { Admin, Company, Project } from "./types";
 
 const BASE_URL="http://localhost:8080"
 
@@ -44,19 +44,16 @@ export async function addEmployee(employee: {
     return await response.json();
 };
 
-export async function addProject(project: {
-    name: string,
-    description: string,
-    startDate: string,
-    endDate: string,
-    company_id: number
-}) {
+export async function addProject(project: Project) {
     const response = await fetch(`${BASE_URL}/api/projects`, {
         method: "POST",
         headers: {
             "Content-type": "application/json"
         },
-        body: JSON.stringify(project)
+        body: JSON.stringify({
+            ...project,
+            customer: project.customer ? { customer_id: project.customer.customer_id } : null,
+        })
     });
     console.log("sent project: ")
     console.log(project)
