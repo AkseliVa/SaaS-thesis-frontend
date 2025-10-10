@@ -32,8 +32,9 @@ export interface Customer {
   contactPerson?: string;
   contactEmail?: string;
   contactPhone?: string;
-  customerManager?: Employee;
-  company?: { company_id: number };
+  customerManager?: Employee | null;
+  company_id?: number;
+  projects?: Project[];
 }
 
 export interface Project {

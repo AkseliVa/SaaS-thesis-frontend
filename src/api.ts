@@ -129,10 +129,17 @@ export async function updateProject(id: number, project: {
 // -------------------------- CUSTOMER ---------------------------------
 
 export async function updateCustomer(id: number, customer: Customer) {
-
   const customerToSend = {
-    ...customer,
-    company: { company_id: 1 }
+    customer_id: customer.customer_id,
+    name: customer.name,
+    contactPerson: customer.contactPerson,
+    contactEmail: customer.contactEmail,
+    contactPhone: customer.contactPhone,
+    customerManager: customer.customerManager
+      ? { employee_id: customer.customerManager.employee_id }
+      : null,
+    company_id: 1, // ✅ correct field name
+    projects: []   // optional, DTO expects list
   };
 
   const response = await fetch(`${BASE_URL}/api/customers/${id}`, {
@@ -151,6 +158,7 @@ export async function updateCustomer(id: number, customer: Customer) {
 
 
 
+
 export async function deleteCustomer(id: number) {
     const response = await fetch(`${BASE_URL}/api/customers/${id}`, {
         method: "DELETE"
@@ -164,14 +172,27 @@ export async function deleteCustomer(id: number) {
 };
 
 export async function addCustomer(customer: Customer) {
-    const response = await fetch(`${BASE_URL}/api/customers`, {
-        method: "POST",
-        headers: {
-            "Content-type": "application/json"
-        },
-        body: JSON.stringify(customer)
-    });
-    console.log("sent project: ")
-    console.log(customer)
-    return await response.json();
-};
+  const customerToSend = {
+    name: customer.name,
+    contactPerson: customer.contactPerson,
+    contactEmail: customer.contactEmail,
+    contactPhone: customer.contactPhone,
+    customerManager: customer.customerManager
+      ? { employee_id: customer.customerManager.employee_id }
+      : null,
+    company_id: customer.company_id
+  };
+
+  const response = await fetch(`${BASE_URL}/api/customers`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(customerToSend),
+  });
+
+  if (!response.ok) {
+    const err = await response.text();
+    throw new Error(err);
+  }
+
+  return await response.json();
+}

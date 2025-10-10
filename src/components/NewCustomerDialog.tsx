@@ -1,16 +1,18 @@
-import { Alert, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
-import type { Customer } from "../types";
+import { Alert, Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
+import type { Customer, Employee } from "../types";
 import { useState } from "react";
 import { addCustomer } from "../api";
 
-function NewCustomerDialog({ open, onClose, onCustomerAdded }: { open: boolean, onClose: () => void, onCustomerAdded: () => void }) {
+function NewCustomerDialog({ open, onClose, onCustomerAdded, employees }: { open: boolean, onClose: () => void, onCustomerAdded: () => void, employees: Employee[] | undefined }) {
     const [showAlert, setShowAlert] = useState(false);
     const [customer, setCustomer] = useState<Customer>({
         customer_id: 0,
         name: "",
         contactPerson: "",
         contactEmail: "",
-        contactPhone: ""
+        contactPhone: "",
+        customerManager: null,
+        company_id: 1
     });
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,9 +20,9 @@ function NewCustomerDialog({ open, onClose, onCustomerAdded }: { open: boolean, 
     };
 
     const handleSave = async () => {
-        const { name, contactPerson, contactEmail, contactPhone } = customer;
+        const { name, contactPerson, contactEmail, contactPhone, customerManager } = customer;
 
-        if (!name || !contactPerson || !contactEmail || !contactPhone) {
+        if (!name || !contactPerson || !contactEmail || !contactPhone || !customerManager) {
             setShowAlert(true);
             return;
         }
@@ -34,7 +36,9 @@ function NewCustomerDialog({ open, onClose, onCustomerAdded }: { open: boolean, 
             name: "",
             contactPerson: "",
             contactEmail: "",
-            contactPhone: ""
+            contactPhone: "",
+            company_id: 1,
+            customerManager: null
         });
     };
 
@@ -55,12 +59,14 @@ function NewCustomerDialog({ open, onClose, onCustomerAdded }: { open: boolean, 
                     name="name"
                     onChange={handleChange}
                 />
-                <TextField
-                    fullWidth
-                    margin="dense"
-                    label="Customer manager"
-                    name="customerManager"
-                    onChange={handleChange}
+                <Autocomplete
+                    options={employees}
+                    getOptionLabel={option => `${option.firstname} ${option.lastname}`}
+                    value={customer.customerManager}
+                    onChange={(_, newValue) =>
+                        setCustomer({ ...customer, customerManager: newValue })
+                    }
+                    renderInput={params => <TextField {...params} label="Customer Manager" />}
                 />
                 <TextField
                     fullWidth

@@ -1,5 +1,5 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography } from "@mui/material";
-import type { Customer } from "../types";
+import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography } from "@mui/material";
+import type { Customer, Employee } from "../types";
 import { deleteCustomer, updateCustomer } from "../api";
 import { useEffect, useState } from "react";
 
@@ -8,13 +8,15 @@ function CustomerDialog({
   onClose,
   customer,
   onCustomerDeleted,
-  onCustomerUpdated
+  onCustomerUpdated,
+  employees
 }: {
   open: boolean;
   onClose: () => void;
   customer: Customer;
   onCustomerDeleted: () => void;
   onCustomerUpdated: (updated: Customer) => void;
+  employees: Employee[] | undefined
 }) {
   const [isEdit, setIsEdit] = useState(false);
   const [currentCustomer, setCurrentCustomer] = useState<Customer>(customer);
@@ -101,6 +103,15 @@ function CustomerDialog({
               variant="outlined"
               value={editedCustomer.name}
               onChange={handleChange}
+            />
+            <Autocomplete
+                options={employees}
+                getOptionLabel={option => `${option.firstname} ${option.lastname}`}
+                value={customer.customerManager}
+                onChange={(_, newValue) =>
+                        setEditedCustomer({ ...editedCustomer, customerManager: newValue })
+                    }
+                renderInput={params => <TextField {...params} label="Customer Manager" />}
             />
             <TextField
               fullWidth

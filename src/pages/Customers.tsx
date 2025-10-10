@@ -96,7 +96,8 @@ function Customers() {
                                 setOpenSnackbar(true);
                                 setOpenSnackbar(false);
                                 setTimeout(() => setOpenSnackbar(true), 0);
-                            }} 
+                            }}
+                            employees={companyData[0].employees}
                         />
                     )}
 
@@ -105,6 +106,7 @@ function Customers() {
                             open={newOpen}
                             onClose={handleNewCustomerClose}
                             onCustomerAdded={() => handleCustomerAdded("Customer added successfully")}
+                            employees={companyData[0].employees}
                         />
                     )}
 
