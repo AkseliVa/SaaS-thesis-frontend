@@ -7,8 +7,8 @@ import dayjs from 'dayjs';
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
-function ProjectDialog({ open, onClose, project, employees, onProjectDeleted, onProjectUpdated }: 
-    { open: boolean, onClose: () => void, project: Project, employees: Employee[] | null, onProjectDeleted: () => void, onProjectUpdated: (updated: Project) => void }) {
+function ProjectDialog({ open, onClose, project, employees, onProjectDeleted, onProjectUpdated, fromCustomer }: 
+    { open: boolean, onClose: () => void, project: Project, employees: Employee[] | null, onProjectDeleted: () => void, onProjectUpdated: (updated: Project) => void, fromCustomer: boolean }) {
     
     const [isEdit, setIsEdit] = useState(false);
     const [currentProject, setCurrentProject] = useState<Project>(project);
@@ -73,7 +73,7 @@ function ProjectDialog({ open, onClose, project, employees, onProjectDeleted, on
     
     return (
         <>
-        <Dialog open={open} onClose={onClose}>
+        <Dialog open={open} onClose={onClose} fullWidth={true} maxWidth="sm">
             {!isEdit ? (
                 <>
                     <DialogTitle>{currentProject.name}</DialogTitle>
@@ -101,13 +101,17 @@ function ProjectDialog({ open, onClose, project, employees, onProjectDeleted, on
             )}
                     </DialogContent>
                     <DialogActions>
-                        {currentProject.active == true ? (
-                            <Button color="error" onClick={() => changeProjectStatus(false)}>Archive</Button>
-                        ) : (
-                            <Button color="error" onClick={() => changeProjectStatus(true)}>Activate</Button>
+                        {!fromCustomer && (
+                            <>
+                                {currentProject.active == true ? (
+                                    <Button color="error" onClick={() => changeProjectStatus(false)}>Archive</Button>
+                                ) : (
+                                    <Button color="error" onClick={() => changeProjectStatus(true)}>Activate</Button>
+                                )}
+                                <Button onClick={() => setIsEdit(true)}>Edit</Button>
+                                <Button color="error" onClick={removeProject}>Delete</Button>
+                            </>
                         )}
-                        <Button onClick={() => setIsEdit(true)}>Edit</Button>
-                        <Button color="error" onClick={removeProject}>Delete</Button>
                         <Button onClick={onClose}>Close</Button>
                     </DialogActions>
                 </>

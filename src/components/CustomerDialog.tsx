@@ -1,7 +1,11 @@
-import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography } from "@mui/material";
-import type { Customer, Employee } from "../types";
-import { deleteCustomer, updateCustomer } from "../api";
+// CustomerDialog.tsx (only the important parts replaced)
+import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography, IconButton } from "@mui/material";
+import InfoIcon from "@mui/icons-material/Info";
+import EmployeeDialog from "./EmployeeDialog";
+import ProjectDialog from "./ProjectDialog";
+import type { Customer, Employee, Project } from "../types";
 import { useEffect, useState } from "react";
+import { deleteCustomer, updateCustomer } from "../api";
 
 function CustomerDialog({
   open,
@@ -16,91 +20,142 @@ function CustomerDialog({
   customer: Customer;
   onCustomerDeleted: () => void;
   onCustomerUpdated: (updated: Customer) => void;
-  employees: Employee[] | undefined
+  employees: Employee[] | undefined;
 }) {
   const [isEdit, setIsEdit] = useState(false);
   const [currentCustomer, setCurrentCustomer] = useState<Customer>(customer);
   const [editedCustomer, setEditedCustomer] = useState<Customer>(customer);
-  const [customerManager, setCustomerManager] = useState("No customer manager");
+  const [customerManagerLabel, setCustomerManagerLabel] = useState("No customer manager");
+
+  // dialogs
+  const [employeeDialogOpen, setEmployeeDialogOpen] = useState(false);
+  const [projectDialogOpen, setProjectDialogOpen] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   useEffect(() => {
     setCurrentCustomer(customer);
     setEditedCustomer(customer);
+    setCustomerManagerLabel(
+      customer?.customerManager
+        ? `${customer.customerManager.firstname} ${customer.customerManager.lastname}`
+        : "No customer manager"
+    );
+  }, [customer, open]);
 
-    if (customer.customerManager) {
-      setCustomerManager(
-        `${customer.customerManager.firstname} ${customer.customerManager.lastname}`
-      );
-    } else {
-      setCustomerManager("No customer manager");
-    }
-  }, [customer]);
+  const saveCustomer = async () => { 
+    console.log("Sending customer update:", JSON.stringify(editedCustomer, null, 2)); 
+    try { if (customer.customer_id !== undefined) { 
+      const updated = await updateCustomer(customer.customer_id, editedCustomer); 
+      setCurrentCustomer(updated); 
+      setIsEdit(false); 
+      onCustomerUpdated(updated); 
+    } else { 
+      console.error("Cannot update customer: customer_id is undefined"); 
+    } 
+  } catch (err) { 
+    console.log(err); 
+  } 
+};
 
-  const removeCustomer = async () => {
-    try {
-      if (customer.customer_id !== undefined) {
-        await deleteCustomer(customer.customer_id);
-        onCustomerDeleted();
-        onClose();
-      } else {
-        console.error("Cannot delete customer: customer_id is undefined");
-      }
-    } catch (err) {
-      console.log(err);
-    }
+  // --- Handler called when EmployeeDialog saved successfully ---
+  const handleManagerUpdated = (updatedEmployee: Employee) => {
+    console.log("Manager updated callback in CustomerDialog, got:", updatedEmployee);
+
+    // update current and edited customer manager
+    const updatedCustomer = {
+      ...currentCustomer,
+      customerManager: updatedEmployee,
+    };
+    setCurrentCustomer(updatedCustomer);
+    setEditedCustomer((prev) => ({ ...prev, customerManager: updatedEmployee }));
+
+    // update textual label
+    setCustomerManagerLabel(`${updatedEmployee.firstname} ${updatedEmployee.lastname}`);
+
+    // notify parent (so Customers page / parent lists can update too)
+    // build a Customer-shaped object to pass
+    const notifyCustomer = {
+      ...updatedCustomer,
+    } as Customer;
+    onCustomerUpdated(notifyCustomer);
   };
 
-  const saveCustomer = async () => {
-    console.log("Sending customer update:", JSON.stringify(editedCustomer, null, 2));
-    try {
-      if (customer.customer_id !== undefined) {
-        const updated = await updateCustomer(customer.customer_id, editedCustomer);
-        setCurrentCustomer(updated);
-        setIsEdit(false);
-        onCustomerUpdated(updated);
-      } else {
-        console.error("Cannot update customer: customer_id is undefined");
-      }
-    } catch (err) {
-      console.log(err);
-    }
+  // project update handler (you already have logic for this)
+  const handleProjectUpdated = (updatedProject: Project) => {
+    const updatedProjects = currentCustomer.projects?.map((p) =>
+      p.project_id === updatedProject.project_id ? updatedProject : p
+    );
+    const updatedCustomer = { ...currentCustomer, projects: updatedProjects };
+    setCurrentCustomer(updatedCustomer);
+    setEditedCustomer({ ...editedCustomer, projects: updatedProjects });
+    onCustomerUpdated(updatedCustomer);
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEditedCustomer({ ...editedCustomer, [event.target.name]: event.target.value });
-  };
-
+  const removeCustomer = async () => { 
+    try { 
+      if (customer.customer_id !== undefined) { 
+        await deleteCustomer(customer.customer_id); 
+        onCustomerDeleted(); 
+        onClose(); } else { 
+          console.error("Cannot delete customer: customer_id is undefined"); 
+        } 
+      } catch (err) { 
+        console.log(err); 
+      } 
+    };
+  
   return (
-    <Dialog open={open} onClose={onClose} fullWidth={true} maxWidth="sm">
+    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
       {!isEdit ? (
         <>
           <DialogTitle>{currentCustomer.name}</DialogTitle>
           <DialogContent>
-            <Typography>Customer Manager: {customerManager}</Typography>
+            <Typography sx={{ display: "flex", alignItems: "center" }}>
+              Customer Manager:&nbsp;{customerManagerLabel}
+              {currentCustomer.customerManager && (
+                <IconButton
+                  size="small"
+                  color="primary"
+                  onClick={() => setEmployeeDialogOpen(true)}
+                  sx={{ ml: 1 }}
+                >
+                  <InfoIcon />
+                </IconButton>
+              )}
+            </Typography>
+
             <Typography>Contact Person: {currentCustomer.contactPerson}</Typography>
             <Typography>Email: {currentCustomer.contactEmail}</Typography>
             <Typography>Phone: {currentCustomer.contactPhone}</Typography>
-            {currentCustomer.projects != null && currentCustomer.projects.length > 0 ? (
-                <>
-                    <Typography>Projects: </Typography> 
-                    {currentCustomer.projects.map((project) => (
-                        <Typography key={project.project_id}>
-                            {project.name}
-                        </Typography>
-                    ))}
-                </>
-            
-                    ) : (
-                        <Typography>No projects assigned yet</Typography>
-                    )}
+
+            {currentCustomer.projects && currentCustomer.projects.length > 0 ? (
+              <>
+                <Typography>Projects:</Typography>
+                {currentCustomer.projects.map((project) => (
+                  <Typography key={project.project_id} sx={{ display: "flex", alignItems: "center" }}>
+                    {project.name}
+                    <IconButton
+                      size="small"
+                      color="primary"
+                      onClick={() => {
+                        setSelectedProject(project);
+                        setProjectDialogOpen(true);
+                      }}
+                      sx={{ ml: 1 }}
+                    >
+                      <InfoIcon />
+                    </IconButton>
+                  </Typography>
+                ))}
+              </>
+            ) : (
+              <Typography>No projects assigned yet</Typography>
+            )}
           </DialogContent>
+
           <DialogActions>
-            <Button color="secondary" onClick={() => setIsEdit(true)}>
-              Edit
-            </Button>
-            <Button color="error" onClick={removeCustomer}>
-              Delete
-            </Button>
+            <Button color="secondary" onClick={() => setIsEdit(true)}>Edit</Button>
+            <Button color="error" onClick={removeCustomer}>Delete</Button>
             <Button onClick={onClose}>Close</Button>
           </DialogActions>
         </>
@@ -108,57 +163,62 @@ function CustomerDialog({
         <>
           <DialogTitle>Edit Customer</DialogTitle>
           <DialogContent>
-            <TextField
-              fullWidth
-              margin="dense"
-              name="name"
-              label="Name"
-              variant="outlined"
-              value={editedCustomer.name}
-              onChange={handleChange}
-            />
+            <TextField fullWidth margin="dense" name="name" label="Name" value={editedCustomer.name}
+              onChange={(e) => setEditedCustomer({ ...editedCustomer, name: e.target.value })} />
+
             <Autocomplete
-                options={employees}
-                getOptionLabel={option => `${option.firstname} ${option.lastname}`}
-                value={customer.customerManager}
-                onChange={(_, newValue) =>
-                        setEditedCustomer({ ...editedCustomer, customerManager: newValue })
-                    }
-                renderInput={params => <TextField {...params} label="Customer Manager" />}
+              options={employees ?? []}
+              getOptionLabel={(option) => `${option.firstname} ${option.lastname}`}
+              value={editedCustomer.customerManager ?? null}
+              onChange={(_, newValue) =>
+                setEditedCustomer({ ...editedCustomer, customerManager: newValue ?? undefined })
+              }
+              renderInput={(params) => <TextField {...params} label="Customer Manager" />}
             />
-            <TextField
-              fullWidth
-              margin="dense"
-              name="contactPerson"
-              label="Contact Person"
-              variant="outlined"
-              value={editedCustomer.contactPerson}
-              onChange={handleChange}
-            />
-            <TextField
-              fullWidth
-              margin="dense"
-              name="contactEmail"
-              label="Contact Email"
-              variant="outlined"
-              value={editedCustomer.contactEmail}
-              onChange={handleChange}
-            />
-            <TextField
-              fullWidth
-              margin="dense"
-              name="contactPhone"
-              label="Contact Phone"
-              variant="outlined"
-              value={editedCustomer.contactPhone}
-              onChange={handleChange}
-            />
+
+            <TextField fullWidth margin="dense" name="contactPerson" label="Contact Person" value={editedCustomer.contactPerson ?? ""}
+              onChange={(e) => setEditedCustomer({ ...editedCustomer, contactPerson: e.target.value })} />
+            <TextField fullWidth margin="dense" name="contactEmail" label="Contact Email" value={editedCustomer.contactEmail ?? ""}
+              onChange={(e) => setEditedCustomer({ ...editedCustomer, contactEmail: e.target.value })} />
+            <TextField fullWidth margin="dense" name="contactPhone" label="Contact Phone" value={editedCustomer.contactPhone ?? ""}
+              onChange={(e) => setEditedCustomer({ ...editedCustomer, contactPhone: e.target.value })} />
           </DialogContent>
+
           <DialogActions>
             <Button onClick={saveCustomer}>Save</Button>
             <Button onClick={() => setIsEdit(false)}>Cancel</Button>
           </DialogActions>
         </>
+      )}
+
+      {currentCustomer.customerManager && (
+        <EmployeeDialog
+          open={employeeDialogOpen}
+          onClose={() => setEmployeeDialogOpen(false)}
+          employee={currentCustomer.customerManager}
+          projects={currentCustomer.projects || []}
+          onEmployeeDeleted={() => {}}
+          onEmployeeUpdated={(updatedEmployee) => {
+            handleManagerUpdated(updatedEmployee);
+            setEmployeeDialogOpen(false);
+          }}
+          fromCustomer={true}
+        />
+      )}
+
+      {selectedProject && (
+        <ProjectDialog
+          open={projectDialogOpen}
+          onClose={() => setProjectDialogOpen(false)}
+          project={selectedProject}
+          employees={currentCustomer.employees || []}
+          onProjectDeleted={() => { setProjectDialogOpen(false); }}
+          onProjectUpdated={(updatedProject) => {
+            handleProjectUpdated(updatedProject);
+            setProjectDialogOpen(false);
+          }}
+          fromCustomer={true}
+        />
       )}
     </Dialog>
   );

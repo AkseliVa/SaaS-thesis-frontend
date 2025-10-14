@@ -7,8 +7,8 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 
-function EmployeeDialog({ open, onClose, employee, projects, onEmployeeDeleted, onEmployeeUpdated }: 
-    { open: boolean, onClose: () => void, employee: Employee, projects: Project[] | null, onEmployeeDeleted: () => void, onEmployeeUpdated: (updated: Employee) => void }) {
+function EmployeeDialog({ open, onClose, employee, projects, onEmployeeDeleted, onEmployeeUpdated, fromCustomer }: 
+    { open: boolean, onClose: () => void, employee: Employee, projects: Project[] | null, onEmployeeDeleted: () => void, onEmployeeUpdated: (updated: Employee) => void, fromCustomer: boolean }) {
     
     const [isEdit, setIsEdit] = useState(false);
     const [currentEmployee, setCurrentEmployee] = useState<Employee>(employee);
@@ -54,7 +54,7 @@ function EmployeeDialog({ open, onClose, employee, projects, onEmployeeDeleted, 
     
     return (
         <>
-        <Dialog open={open} onClose={onClose}>
+        <Dialog open={open} onClose={onClose} fullWidth={true} maxWidth="sm">
             {!isEdit ? (
                 <>
                     <DialogTitle>{currentEmployee.firstname} {currentEmployee.lastname}</DialogTitle>
@@ -77,8 +77,12 @@ function EmployeeDialog({ open, onClose, employee, projects, onEmployeeDeleted, 
             )}
                     </DialogContent>
                     <DialogActions>
-                        <Button color="secondary" onClick={() => setIsEdit(true)}>Edit</Button>
-                        <Button color="error" onClick={removeEmployee}>Delete</Button>
+                        {!fromCustomer && (
+                            <>
+                                <Button color="secondary" onClick={() => setIsEdit(true)}>Edit</Button>
+                                <Button color="error" onClick={removeEmployee}>Delete</Button>
+                            </>
+                        )}
                         <Button onClick={onClose}>Close</Button>
                     </DialogActions>
                 </>

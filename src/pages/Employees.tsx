@@ -102,7 +102,8 @@ function Employees() {
                                 setOpenSnackbar(true);
                                 setOpenSnackbar(false);
                                 setTimeout(() => setOpenSnackbar(true), 0);
-                            }} 
+                            }}
+                            fromCustomer={false}
                         />
                     )}
 
