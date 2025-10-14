@@ -3,6 +3,7 @@ import { fetchCompanies } from "../api";
 import type { Company, Employee } from "../types";
 import EmployeeCard from "../components/EmployeeCard";
 import { Box, Button, Grid } from "@mui/material";
+import '../styles/employees.css'
 
 import EmployeeDialog from "../components/EmployeeDialog";
 import NewEmployeeDialog from "../components/NewEmployeeDialog";
@@ -55,11 +56,12 @@ function Employees() {
     };
 
     return (
+        <div className="employees-container">
         <Box
             sx={{
                 justifyContent: "center",
                 alignItems: "center",
-                margin: 10
+                padding: 10
             }}
         >
                 <Paper 
@@ -120,6 +122,7 @@ function Employees() {
                     />
                 </Paper>
             </Box>
+            </div>
     );
 };
 

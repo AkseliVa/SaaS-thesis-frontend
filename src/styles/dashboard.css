@@ -9,3 +9,11 @@
 .cards {
     margin: 100px;
 }
+
+body {
+    margin: 0;
+    display: flex;
+    place-items: center;
+    min-width: 100vh;
+    min-height: 100vh;
+}

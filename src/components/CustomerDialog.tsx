@@ -71,7 +71,7 @@ function CustomerDialog({
   };
 
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog open={open} onClose={onClose} fullWidth={true} maxWidth="sm">
       {!isEdit ? (
         <>
           <DialogTitle>{currentCustomer.name}</DialogTitle>
@@ -80,6 +80,19 @@ function CustomerDialog({
             <Typography>Contact Person: {currentCustomer.contactPerson}</Typography>
             <Typography>Email: {currentCustomer.contactEmail}</Typography>
             <Typography>Phone: {currentCustomer.contactPhone}</Typography>
+            {currentCustomer.projects != null && currentCustomer.projects.length > 0 ? (
+                <>
+                    <Typography>Projects: </Typography> 
+                    {currentCustomer.projects.map((project) => (
+                        <Typography key={project.project_id}>
+                            {project.name}
+                        </Typography>
+                    ))}
+                </>
+            
+                    ) : (
+                        <Typography>No projects assigned yet</Typography>
+                    )}
           </DialogContent>
           <DialogActions>
             <Button color="secondary" onClick={() => setIsEdit(true)}>

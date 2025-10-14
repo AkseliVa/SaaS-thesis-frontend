@@ -5,6 +5,7 @@ import { Box, Button, Grid, Paper, Snackbar } from "@mui/material";
 import CustomerCard from "../components/CustomerCard";
 import CustomerDialog from "../components/CustomerDialog";
 import NewCustomerDialog from "../components/NewCustomerDialog";
+import '../styles/customers.css'
 
 function Customers() {
     const [companyData, setCompanyData] = useState<Company[]>([]);
@@ -52,17 +53,17 @@ function Customers() {
         };
 
     return (
+        <div className="customers-container">
         <Box
             sx={{
                 justifyContent: "center",
                 alignItems: "center",
-                margin: 10
+                padding: 10,
             }}
         >
             <Paper 
                 sx={{
                     padding: 10,
-                    margin: 2,
                     boxSizing: "border-box"
                 }}
                 elevation={20}
@@ -118,6 +119,7 @@ function Customers() {
                     />
             </Paper>
         </Box>
+        </div>
     )
 };
 
