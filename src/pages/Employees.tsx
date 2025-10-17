@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchCompanies } from "../api";
+import { fetchCompany } from "../api";
 import type { Company, Employee } from "../types";
 import EmployeeCard from "../components/EmployeeCard";
 import { Box, Button, Grid } from "@mui/material";
@@ -11,7 +11,7 @@ import Snackbar from '@mui/material/Snackbar';
 import Paper from '@mui/material/Paper';
 
 function Employees() {
-    const [companyData, setCompanyData] = useState<Company[]>([]);
+    const [companyData, setCompanyData] = useState<Company>();
     const [infoOpen, setInfoOpen] = useState(false);
     const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
     const [newOpen, setNewOpen] = useState(false);
@@ -21,7 +21,7 @@ function Employees() {
     useEffect(() => {
         const fetchCompanyData = async() => {
             try {
-                const data = await fetchCompanies();
+                const data = await fetchCompany();
                 setCompanyData(data);
             } catch (err) {
                 console.log(err)
@@ -76,8 +76,8 @@ function Employees() {
                     <h1>Employees</h1>
                     <Button sx={{ marginBottom: 5}} variant="contained" color="success" onClick={handleNewEmployeeClick}>New Employee</Button>
                     <Grid container spacing={10} sx={{justifyContent: "center", margin: 2}}>
-                        {companyData.length > 0 && 
-                            companyData[0].employees?.map((employee: Employee) => {
+                        {companyData != null && 
+                            companyData.employees?.map((employee: Employee) => {
                                 return (                   
                                     <EmployeeCard
                                         key={employee.employee_id}
@@ -94,7 +94,7 @@ function Employees() {
                             open={infoOpen}
                             onClose={handleInfoClose}
                             employee={selectedEmployee}
-                            projects={companyData[0].projects || null}
+                            projects={companyData?.projects || null}
                             onEmployeeDeleted={() => handleEmployeeAdded("Employee deleted successfully")}
                             onEmployeeUpdated={(updated) => {
                                 setSelectedEmployee(updated)

@@ -27,7 +27,6 @@ function CustomerDialog({
   const [editedCustomer, setEditedCustomer] = useState<Customer>(customer);
   const [customerManagerLabel, setCustomerManagerLabel] = useState("No customer manager");
 
-  // dialogs
   const [employeeDialogOpen, setEmployeeDialogOpen] = useState(false);
   const [projectDialogOpen, setProjectDialogOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -57,11 +56,9 @@ function CustomerDialog({
   } 
 };
 
-  // --- Handler called when EmployeeDialog saved successfully ---
   const handleManagerUpdated = (updatedEmployee: Employee) => {
     console.log("Manager updated callback in CustomerDialog, got:", updatedEmployee);
 
-    // update current and edited customer manager
     const updatedCustomer = {
       ...currentCustomer,
       customerManager: updatedEmployee,
@@ -69,18 +66,14 @@ function CustomerDialog({
     setCurrentCustomer(updatedCustomer);
     setEditedCustomer((prev) => ({ ...prev, customerManager: updatedEmployee }));
 
-    // update textual label
     setCustomerManagerLabel(`${updatedEmployee.firstname} ${updatedEmployee.lastname}`);
 
-    // notify parent (so Customers page / parent lists can update too)
-    // build a Customer-shaped object to pass
     const notifyCustomer = {
       ...updatedCustomer,
     } as Customer;
     onCustomerUpdated(notifyCustomer);
   };
 
-  // project update handler (you already have logic for this)
   const handleProjectUpdated = (updatedProject: Project) => {
     const updatedProjects = currentCustomer.projects?.map((p) =>
       p.project_id === updatedProject.project_id ? updatedProject : p
@@ -211,7 +204,7 @@ function CustomerDialog({
           open={projectDialogOpen}
           onClose={() => setProjectDialogOpen(false)}
           project={selectedProject}
-          employees={currentCustomer.employees || []}
+          employees={[]}
           onProjectDeleted={() => { setProjectDialogOpen(false); }}
           onProjectUpdated={(updatedProject) => {
             handleProjectUpdated(updatedProject);

@@ -32,7 +32,7 @@ function Projects() {
     useEffect(() => {
         const fetchCompanyData = async() => {
             try {
-                const data = await fetchCompany(1);
+                const data = await fetchCompany();
                 setCompanyData(data);
                 setActiveProjects(data.projects?.filter(project => project.active === true) || []);
                 setArchivedProjects(data.projects?.filter(project => !project.active) || []);

@@ -4,7 +4,8 @@ export type Admin = {
     password: string,
     firstname: string,
     lastname: string,
-    company: Company
+    company: Company,
+    role: string
 };
 
 export type Company = {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchCompanies } from "../api";
+import { fetchCompany } from "../api";
 import type { Company, Customer } from "../types";
 import { Box, Button, Grid, Paper, Snackbar } from "@mui/material";
 import CustomerCard from "../components/CustomerCard";
@@ -8,49 +8,49 @@ import NewCustomerDialog from "../components/NewCustomerDialog";
 import '../styles/customers.css'
 
 function Customers() {
-    const [companyData, setCompanyData] = useState<Company[]>([]);
+    const [companyData, setCompanyData] = useState<Company>();
     const [infoOpen, setInfoOpen] = useState(false);
     const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
     const [newOpen, setNewOpen] = useState(false);
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState<string>("");
     
-        useEffect(() => {
-            const fetchCompanyData = async() => {
-                try {
-                    const data = await fetchCompanies();
-                    setCompanyData(data);
-                } catch (err) {
-                    console.log(err)
-                }
-            };
-            fetchCompanyData();
-        }, [openSnackbar]);
-        
-        console.log(companyData);
-    
-        const handleInfoCardClick = (customer: Customer) => {
-            setSelectedCustomer(customer);
-            setInfoOpen(true);
+    useEffect(() => {
+        const fetchCompanyData = async() => {
+            try {
+                const data = await fetchCompany();
+                setCompanyData(data);
+            } catch (err) {
+                console.log(err)
+            }
         };
+        fetchCompanyData();
+    }, [openSnackbar]);
     
-        const handleInfoClose = () => {
-            setInfoOpen(false);
-            setSelectedCustomer(null);
-        };
-    
-        const handleNewCustomerClick = () => {
-            setNewOpen(true);
-        };
-    
-        const handleNewCustomerClose = () => {
-            setNewOpen(false);
-        };
-    
-        const handleCustomerAdded = (message: string) => {
-            setSnackbarMessage(message)
-            setOpenSnackbar(true);
-        };
+    console.log(companyData);
+
+    const handleInfoCardClick = (customer: Customer) => {
+        setSelectedCustomer(customer);
+        setInfoOpen(true);
+    };
+
+    const handleInfoClose = () => {
+        setInfoOpen(false);
+        setSelectedCustomer(null);
+    };
+
+    const handleNewCustomerClick = () => {
+        setNewOpen(true);
+    };
+
+    const handleNewCustomerClose = () => {
+        setNewOpen(false);
+    };
+
+    const handleCustomerAdded = (message: string) => {
+        setSnackbarMessage(message)
+        setOpenSnackbar(true);
+    };
 
     return (
         <div className="customers-container">
@@ -72,8 +72,8 @@ function Customers() {
                 <h1>Customers</h1>
                     <Button sx={{ marginBottom: 5}} variant="contained" color="success" onClick={handleNewCustomerClick}>New Customer</Button>
                     <Grid container spacing={10} sx={{justifyContent: "center", margin: 2}}>
-                        {companyData.length > 0 && 
-                            companyData[0].customers?.map((customer: Customer) => {
+                        {companyData != null && 
+                            companyData.customers?.map((customer: Customer) => {
                                 return (                   
                                     <CustomerCard
                                         key={customer.customer_id}
@@ -98,7 +98,7 @@ function Customers() {
                                 setOpenSnackbar(false);
                                 setTimeout(() => setOpenSnackbar(true), 0);
                             }}
-                            employees={companyData[0].employees}
+                            employees={companyData?.employees}
                         />
                     )}
 
@@ -107,7 +107,7 @@ function Customers() {
                             open={newOpen}
                             onClose={handleNewCustomerClose}
                             onCustomerAdded={() => handleCustomerAdded("Customer added successfully")}
-                            employees={companyData[0].employees}
+                            employees={companyData?.employees}
                         />
                     )}
 

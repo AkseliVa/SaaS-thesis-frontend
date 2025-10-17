@@ -2,8 +2,28 @@ import type { Admin, Company, Customer, Project } from "./types";
 
 const BASE_URL="http://localhost:8080"
 
+function getCompanyId(): number {
+  return Number(localStorage.getItem("companyId"));
+}
+
+function getAuthHeaders(): Record<string, string> {
+  const token = localStorage.getItem("token");
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
+
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+
+  return headers;
+};
+
+
 export async function fetchEverything(): Promise<Admin[]> {
-    const response = await fetch(`${BASE_URL}/api/admins`);
+    const response = await fetch(`${BASE_URL}/api/admins`, {
+        headers: getAuthHeaders()
+    });
     if (!response.ok) {
         throw new Error(`Failed to fetch all-data ${response.status}`)
     };
@@ -13,15 +33,20 @@ export async function fetchEverything(): Promise<Admin[]> {
 // -------------------------- COMPANY ---------------------------------
 
 export async function fetchCompanies(): Promise<Company[]> {
-    const response = await fetch(`${BASE_URL}/api/companies`);
+    const response = await fetch(`${BASE_URL}/api/companies`, {
+        headers: getAuthHeaders()
+    });
     if (!response.ok) {
         throw new Error(`Failed to fetch companies ${response.status}`)
     };
     return await response.json();
 };
 
-export async function fetchCompany(id: number): Promise<Company> {
-    const response = await fetch(`${BASE_URL}/api/companies/${id}`);
+export async function fetchCompany(): Promise<Company> {
+    const id = getCompanyId();
+    const response = await fetch(`${BASE_URL}/api/companies/${id}`, {
+        headers: getAuthHeaders()
+    });
     if (!response.ok) {
         throw new Error(`Failed to fetch company with id: ${id} ${response.status}`)
     };
@@ -40,9 +65,7 @@ export async function addEmployee(employee: {
 }) {
     const response = await fetch(`${BASE_URL}/api/employees`, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
+        headers: getAuthHeaders(),
         body: JSON.stringify(employee)
     });
     return await response.json();
@@ -58,9 +81,7 @@ export async function updateEmployee(id: number, employee:{
 }) {
     const response = await fetch(`${BASE_URL}/api/employees/${id}`, {
         method: "PUT",
-        headers: {
-            "Content-type": "application/json"
-        },
+        headers: getAuthHeaders(),
         body: JSON.stringify(employee)
     });
     return await response.json();
@@ -68,7 +89,8 @@ export async function updateEmployee(id: number, employee:{
 
 export async function deleteEmployee(id: number) {
     const response = await fetch(`${BASE_URL}/api/employees/${id}`, {
-        method: "DELETE"
+        method: "DELETE",
+        headers: getAuthHeaders()
     });
 
     if (!response.ok) {
@@ -83,9 +105,7 @@ export async function deleteEmployee(id: number) {
 export async function addProject(project: Project) {
     const response = await fetch(`${BASE_URL}/api/projects`, {
         method: "POST",
-        headers: {
-            "Content-type": "application/json"
-        },
+        headers: getAuthHeaders(),
         body: JSON.stringify({
             ...project,
             customer: project.customer ? { customer_id: project.customer.customer_id } : null,
@@ -98,7 +118,8 @@ export async function addProject(project: Project) {
 
 export async function deleteProject(id: number) {
     const response = await fetch(`${BASE_URL}/api/projects/${id}`, {
-        method: "DELETE"
+        method: "DELETE",
+        headers: getAuthHeaders()
     });
 
     if (!response.ok) {
@@ -118,9 +139,7 @@ export async function updateProject(id: number, project: {
 }) {
     const response = await fetch(`${BASE_URL}/api/projects/${id}`, {
         method: "PUT",
-        headers: {
-            "Content-type": "application/json"
-        },
+        headers: getAuthHeaders(),
         body: JSON.stringify(project)
     });
     return await response.json();
@@ -144,7 +163,7 @@ export async function updateCustomer(id: number, customer: Customer) {
 
   const response = await fetch(`${BASE_URL}/api/customers/${id}`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    headers: getAuthHeaders(),
     body: JSON.stringify(customerToSend),
   });
 
@@ -161,7 +180,8 @@ export async function updateCustomer(id: number, customer: Customer) {
 
 export async function deleteCustomer(id: number) {
     const response = await fetch(`${BASE_URL}/api/customers/${id}`, {
-        method: "DELETE"
+        method: "DELETE",
+        headers: getAuthHeaders()
     });
 
     if (!response.ok) {
@@ -185,7 +205,7 @@ export async function addCustomer(customer: Customer) {
 
   const response = await fetch(`${BASE_URL}/api/customers`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: getAuthHeaders(),
     body: JSON.stringify(customerToSend),
   });
 

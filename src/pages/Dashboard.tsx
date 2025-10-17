@@ -15,7 +15,7 @@ function Dashboard() {
     useEffect(() => {
         const fetchAdminData = async() => {
             try {
-                const data = await fetchCompany(1);
+                const data = await fetchCompany();
                 setCompanyData(data);
             } catch (err) {
                 console.log(err)
