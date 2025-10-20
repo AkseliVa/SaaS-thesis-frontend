@@ -92,6 +92,9 @@ function Projects() {
                     ) : (
                         <Button sx={{ marginBottom: 5, marginLeft: 5}} variant="contained" color="secondary" onClick={() => setShowArchivedProjects(false)}>Active Projects</Button>
                     )}
+                    {companyData?.projects?.length === 0 || !companyData?.projects ? (
+                        <h2>No projects yet</h2>
+                    ) : (
                     <Grid container spacing={10} sx={{justifyContent: "center", margin: 2}}>
                         {!showArchivedProjects ? (
                             (activeProjects?.map((project: Project) => {
@@ -120,6 +123,7 @@ function Projects() {
                         )
                         }
                     </Grid>
+                    )}
 
                     {selectedProject && (
                         <ProjectDialog 

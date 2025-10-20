@@ -4,7 +4,7 @@ const BASE_URL="http://localhost:8080"
 
 function getCompanyId(): number {
   return Number(localStorage.getItem("companyId"));
-}
+};
 
 function getAuthHeaders(): Record<string, string> {
   const token = localStorage.getItem("token");
@@ -34,7 +34,7 @@ export async function fetchEverything(): Promise<Admin[]> {
 
 export async function fetchCompanies(): Promise<Company[]> {
     const response = await fetch(`${BASE_URL}/api/companies`, {
-        headers: getAuthHeaders()
+        headers: { "Content-Type": "application/json" },
     });
     if (!response.ok) {
         throw new Error(`Failed to fetch companies ${response.status}`)
@@ -52,6 +52,21 @@ export async function fetchCompany(): Promise<Company> {
     };
     return await response.json();
 };
+
+export async function addCompany(company: { name: string }) {
+  const response = await fetch(`${BASE_URL}/api/companies`, {
+    method: "POST",
+    headers: getAuthHeaders(),
+    body: JSON.stringify(company)
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to add company: ${response.status}`);
+  }
+
+  return await response.json();
+}
+
 
 // -------------------------- EMPLOYEE ---------------------------------
 
@@ -157,8 +172,8 @@ export async function updateCustomer(id: number, customer: Customer) {
     customerManager: customer.customerManager
       ? { employee_id: customer.customerManager.employee_id }
       : null,
-    company_id: 1, // ✅ correct field name
-    projects: []   // optional, DTO expects list
+    company_id: 1,
+    projects: []
   };
 
   const response = await fetch(`${BASE_URL}/api/customers/${id}`, {
@@ -174,9 +189,6 @@ export async function updateCustomer(id: number, customer: Customer) {
 
   return await response.json();
 }
-
-
-
 
 export async function deleteCustomer(id: number) {
     const response = await fetch(`${BASE_URL}/api/customers/${id}`, {

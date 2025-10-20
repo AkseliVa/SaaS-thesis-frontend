@@ -71,6 +71,9 @@ function Customers() {
             >
                 <h1>Customers</h1>
                     <Button sx={{ marginBottom: 5}} variant="contained" color="success" onClick={handleNewCustomerClick}>New Customer</Button>
+                    {companyData?.customers?.length === 0 || !companyData?.customers ? (
+                        <h2>No customers yet</h2>
+                    ) : (
                     <Grid container spacing={10} sx={{justifyContent: "center", margin: 2}}>
                         {companyData != null && 
                             companyData.customers?.map((customer: Customer) => {
@@ -84,6 +87,7 @@ function Customers() {
                             })
                         }
                     </Grid>
+                    )}
 
                     {selectedCustomer && (
                         <CustomerDialog 
@@ -119,6 +123,7 @@ function Customers() {
                     />
             </Paper>
         </Box>
+        
         </div>
     )
 };

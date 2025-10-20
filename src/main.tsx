@@ -11,6 +11,13 @@ import { ProtectedRoute } from "./components/ProtectedRoute";
 export function App() {
   const token = localStorage.getItem("token");
 
+  if (!window.sessionStorage.getItem("sessionStarted")) {
+    localStorage.removeItem("token");
+    localStorage.removeItem("adminId");
+    localStorage.removeItem("companyId");
+    window.sessionStorage.setItem("sessionStarted", "true");
+  }
+
   return (
     <BrowserRouter>
       <Routes>
@@ -22,7 +29,7 @@ export function App() {
         <Route path="/calendar" element={<ProtectedRoute token={token}><Calendar /></ProtectedRoute>} />
         <Route path="/customers" element={<ProtectedRoute token={token}><Customers /></ProtectedRoute>} />
 
-        <Route path="*" element={<Navigate to={token ? "/dashboard" : "/login"} replace />} />
+        <Route path="/" element={<Navigate to={token ? "/dashboard" : "/login"} replace />} />
       </Routes>
 
     </BrowserRouter>

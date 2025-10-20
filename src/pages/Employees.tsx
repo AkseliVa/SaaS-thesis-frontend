@@ -75,6 +75,9 @@ function Employees() {
                 >
                     <h1>Employees</h1>
                     <Button sx={{ marginBottom: 5}} variant="contained" color="success" onClick={handleNewEmployeeClick}>New Employee</Button>
+                    {companyData?.employees?.length === 0 || !companyData?.employees ? (
+                        <h2>No employees yet</h2>
+                    ) : (
                     <Grid container spacing={10} sx={{justifyContent: "center", margin: 2}}>
                         {companyData != null && 
                             companyData.employees?.map((employee: Employee) => {
@@ -88,6 +91,7 @@ function Employees() {
                             })
                         }
                     </Grid>
+                    )}
 
                     {selectedEmployee && (
                         <EmployeeDialog 
