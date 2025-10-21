@@ -1,3 +1,4 @@
+import { Button, TextField } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -44,19 +45,71 @@ function Login({ onLogin }: { onLogin: () => void }) {
     };
 
   return (
-    <div style={{justifyContent: "center", alignItems: "center", display: "flex"}}>
-      <div id="login-container">
+    <div style={{justifyContent: "center", alignItems: "center", display: "flex", padding: 20}}>
+      <div id="login-container" style={{flex: 1, padding: 20, margin: 30}}>
         <h1>Login</h1>
-        <input value={username} onChange={e => setUsername(e.target.value)} />
-        <input value={password} onChange={e => setPassword(e.target.value)} type="password" />
-        <button onClick={() => handleLogin(username, password)}>Login</button>
+        <TextField
+        sx={{
+          backgroundColor: "white"
+        }}
+          fullWidth
+          margin="dense"
+          required
+          label="Username"
+          name="username"
+          onChange={e => setUsername(e.target.value)}
+        />
+        <TextField
+          sx={{
+            backgroundColor: "white"
+          }}
+          fullWidth
+          margin="dense"
+          required
+          label="Password"
+          name="password"
+          type="password"
+          onChange={e => setPassword(e.target.value)}
+        />
+        <Button sx={{marginTop: 5}} variant="contained" onClick={() => handleLogin(username, password)}>Login</Button>
       </div>
-      <div id="signup-container">
+      <div id="signup-container" style={{padding: 20, margin: 30, flex: 1}}>
         <h1>Sign-up</h1>
-        <input value={newUsername} onChange={e => setNewUsername(e.target.value)} />
-        <input value={newPassword} onChange={e => setNewPassword(e.target.value)} type="password" />
-        <input value={companyName} onChange={e => setCompanyName(e.target.value)}/>
-        <button onClick={handleSignup}>Sign-up</button>
+        <TextField
+          sx={{
+            backgroundColor: "white"
+          }}
+          fullWidth
+          margin="dense"
+          required
+          label="Username"
+          name="newUsername"
+          onChange={e => setNewUsername(e.target.value)}
+        />
+        <TextField
+          sx={{
+            backgroundColor: "white"
+          }}
+          fullWidth
+          margin="dense"
+          required
+          label="Password"
+          name="newPassword"
+          type="password"
+          onChange={e => setNewPassword(e.target.value)}
+        />
+        <TextField
+          sx={{
+            backgroundColor: "white"
+          }}
+          fullWidth
+          margin="dense"
+          required
+          label="Company name"
+          name="company"
+          onChange={e => setCompanyName(e.target.value)}
+        />
+        <Button sx={{marginTop: 5}} variant="contained" onClick={handleSignup}>Sign-up</Button>
       </div>
     </div>
   );

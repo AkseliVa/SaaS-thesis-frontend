@@ -53,7 +53,6 @@ function Customers() {
     };
 
     return (
-        <div className="customers-container">
         <Box
             sx={{
                 justifyContent: "center",
@@ -63,7 +62,8 @@ function Customers() {
         >
             <Paper 
                 sx={{
-                    padding: 10,
+                    margin: -5,
+                    padding: 5,
                     boxSizing: "border-box"
                 }}
                 elevation={20}
@@ -123,8 +123,6 @@ function Customers() {
                     />
             </Paper>
         </Box>
-        
-        </div>
     )
 };
 

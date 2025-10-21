@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -16,11 +16,12 @@ function Calendar(openSnackbar) {
   useEffect(() => {
     const fetchCompanyData = async () => {
       try {
-        const data = await fetchCompany(1);
+        const data = await fetchCompany();
 
         const dates: Record<string, string[]> = {};
 
-        data.projects.forEach((project: Project) => {
+        data.projects?.forEach((project: Project) => {
+          if (project.active !== false) {
           if (project.startDate && project.endDate) {
             let current = dayjs(project.startDate);
             const end = dayjs(project.endDate);
@@ -30,10 +31,11 @@ function Calendar(openSnackbar) {
               if (!dates[key]) {
                 dates[key] = [];
               }
-              dates[key].push(project.name);
-              current = current.add(1, "day");
+                dates[key].push(project.name);
+                current = current.add(1, "day");
             }
           }
+        }
         });
 
         setProjectDates(dates);

@@ -2,10 +2,10 @@ import DashboardCard from "../components/DashboardCard";
 import employees from "../assets/images/employees.jpg";
 import projects from "../assets/images/projects.jpg";
 import customers from "../assets/images/customers.jpg"
-import "../styles/dashboard.css"
 import { Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import { fetchCompany } from "../api";
+import '../styles/dashboard.css';
 
 import type { Company } from "../types";
 
@@ -32,7 +32,7 @@ function Dashboard() {
                 <div className="container">
                     <h1 className="heading">{companyData.name}</h1>           
                     <h2>Dashboard</h2>
-                    <Grid container spacing={20}>
+                    <Grid container spacing={5}>
                         <DashboardCard 
                             title="Customers" 
                             description="View, add, edit and delete your customer here"

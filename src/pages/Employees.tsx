@@ -3,7 +3,7 @@ import { fetchCompany } from "../api";
 import type { Company, Employee } from "../types";
 import EmployeeCard from "../components/EmployeeCard";
 import { Box, Button, Grid } from "@mui/material";
-import '../styles/employees.css'
+
 
 import EmployeeDialog from "../components/EmployeeDialog";
 import NewEmployeeDialog from "../components/NewEmployeeDialog";
@@ -61,14 +61,14 @@ function Employees() {
             sx={{
                 justifyContent: "center",
                 alignItems: "center",
-                padding: 10
+                padding: 10,
+                paddingTop: 5
             }}
         >
                 <Paper 
                     sx={{
-                        padding: 10,
+                        padding: 5,
                         margin: 2,
-                        boxSizing: "border-box"
                     }}
                     elevation={20}
                     square={false}
@@ -78,7 +78,7 @@ function Employees() {
                     {companyData?.employees?.length === 0 || !companyData?.employees ? (
                         <h2>No employees yet</h2>
                     ) : (
-                    <Grid container spacing={10} sx={{justifyContent: "center", margin: 2}}>
+                    <Grid container spacing={10} sx={{justifyContent: "center"}}>
                         {companyData != null && 
                             companyData.employees?.map((employee: Employee) => {
                                 return (                   

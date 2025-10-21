@@ -67,10 +67,8 @@ function Projects() {
                 display: "flex",
                 justifyContent: "space-between", 
                 alignItems: "flex-start",        
-                width: "88vw",                  
-                height: "76vh",                 
-                margin: 10,                       
-                boxSizing: "border-box",
+                width: "90vw",                  
+                height: "100vh",
             }}
         >
             <Paper 
@@ -78,7 +76,7 @@ function Projects() {
                     flex: 1,
                     margin: 2,
                     padding: 5,
-                    minHeight: 460
+                    marginBottom: 50
                 }}
                 elevation={20}
                 square={false}
