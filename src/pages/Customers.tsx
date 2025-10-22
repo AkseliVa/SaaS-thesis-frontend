@@ -5,7 +5,6 @@ import { Box, Button, Grid, Paper, Snackbar } from "@mui/material";
 import CustomerCard from "../components/CustomerCard";
 import CustomerDialog from "../components/CustomerDialog";
 import NewCustomerDialog from "../components/NewCustomerDialog";
-import '../styles/customers.css'
 
 function Customers() {
     const [companyData, setCompanyData] = useState<Company>();

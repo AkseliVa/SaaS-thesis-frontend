@@ -64,11 +64,10 @@ function Projects() {
     return (
         <Box
             sx={{
-                display: "flex",
-                justifyContent: "space-between", 
-                alignItems: "flex-start",        
-                width: "90vw",                  
-                height: "100vh",
+                justifyContent: "center",
+                alignItems: "center",
+                padding: 0,
+                display: "flex"
             }}
         >
             <Paper 
@@ -76,7 +75,7 @@ function Projects() {
                     flex: 1,
                     margin: 2,
                     padding: 5,
-                    marginBottom: 50
+
                 }}
                 elevation={20}
                 square={false}
@@ -157,15 +156,16 @@ function Projects() {
                         message={snackbarMessage}
                     />
                 </Paper>
-                <Paper
+                <Paper 
                     sx={{
                         flex: 1,
                         margin: 2,
                         padding: 5,
+
                     }}
-                    elevation={20}
-                    square={false}
-                >
+                elevation={20}
+                square={false}
+            >
                     <Calendar openSnackbar={openSnackbar} />
                 </Paper>
             </Box>

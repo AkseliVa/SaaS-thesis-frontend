@@ -3,8 +3,6 @@ import { fetchCompany } from "../api";
 import type { Company, Employee } from "../types";
 import EmployeeCard from "../components/EmployeeCard";
 import { Box, Button, Grid } from "@mui/material";
-
-
 import EmployeeDialog from "../components/EmployeeDialog";
 import NewEmployeeDialog from "../components/NewEmployeeDialog";
 import Snackbar from '@mui/material/Snackbar';
@@ -62,17 +60,17 @@ function Employees() {
                 justifyContent: "center",
                 alignItems: "center",
                 padding: 10,
-                paddingTop: 5
             }}
         >
                 <Paper 
-                    sx={{
-                        padding: 5,
-                        margin: 2,
-                    }}
-                    elevation={20}
-                    square={false}
-                >
+                sx={{
+                    margin: -5,
+                    padding: 5,
+                    boxSizing: "border-box"
+                }}
+                elevation={20}
+                square={false}
+            >
                     <h1>Employees</h1>
                     <Button sx={{ marginBottom: 5}} variant="contained" color="success" onClick={handleNewEmployeeClick}>New Employee</Button>
                     {companyData?.employees?.length === 0 || !companyData?.employees ? (

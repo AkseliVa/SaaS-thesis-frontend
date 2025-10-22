@@ -2,10 +2,9 @@ import DashboardCard from "../components/DashboardCard";
 import employees from "../assets/images/employees.jpg";
 import projects from "../assets/images/projects.jpg";
 import customers from "../assets/images/customers.jpg"
-import { Grid } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { fetchCompany } from "../api";
-import '../styles/dashboard.css';
 
 import type { Company } from "../types";
 
@@ -27,11 +26,19 @@ function Dashboard() {
     console.log(companyData);
 
     return (
-        <>
+        <Box
+            sx={{
+                justifyContent: "center",
+                alignItems: "center",
+                padding: 6,
+                paddingTop: 2,
+                paddingLeft: 10
+            }}
+        >
             {companyData && 
                 <div className="container">
-                    <h1 className="heading">{companyData.name}</h1>           
-                    <h2>Dashboard</h2>
+                    <Typography variant="h1">{companyData.name}</Typography>           
+                    <Typography variant="h2">Dashboard</Typography>
                     <Grid container spacing={5}>
                         <DashboardCard 
                             title="Customers" 
@@ -54,7 +61,7 @@ function Dashboard() {
                     </Grid>
                 </div>
             }
-        </>
+        </Box>
     )
 }
 

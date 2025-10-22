@@ -7,6 +7,8 @@ import Calendar from "./pages/Calendar";
 import Customers from "./pages/Customers";
 import Login from "./pages/Login";
 import { ProtectedRoute } from "./components/ProtectedRoute";
+import theme from "./theme";
+import { ThemeProvider, CssBaseline } from "@mui/material";
 
 export function App() {
   const token = localStorage.getItem("token");
@@ -36,4 +38,10 @@ export function App() {
   );
 }
 
-createRoot(document.getElementById("root")!).render(<App />);
+createRoot(document.getElementById("root")!).render(
+  <ThemeProvider theme={theme}>
+    <CssBaseline />
+      <App />
+  </ThemeProvider>
+  
+);
