@@ -66,7 +66,8 @@ function Employees() {
                 sx={{
                     margin: -5,
                     padding: 5,
-                    boxSizing: "border-box"
+                    boxSizing: "border-box",
+                    marginTop: "3rem"
                 }}
                 elevation={20}
                 square={false}

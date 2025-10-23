@@ -10,7 +10,7 @@ const theme = createTheme({
       contrastText: "#ffffff",
     },
     secondary: {
-        main: "#0288D1",
+        main: "#024367ff",
     },
     background: {
       default: "#f0f2f5",
@@ -42,7 +42,8 @@ const theme = createTheme({
         color: "#fbfdffff",
         display: "block",
         marginBlockStart: "0.67em",
-        marginBlockEnd: "0.67em"
+        marginBlockEnd: "0.67em",
+        paddingTop: "3rem"
 
     },
     h2: {
@@ -90,6 +91,7 @@ const theme = createTheme({
         root: {
             borderRadius: 20,
             padding: "0.5rem",
+            marginTop: "1rem",
             boxShadow:
             "0px 4px 12px rgba(0, 0, 0, 0.05), 0px 1px 3px rgba(0, 0, 0, 0.03)",
         },

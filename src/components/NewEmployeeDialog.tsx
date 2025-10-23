@@ -96,8 +96,7 @@ function NewEmployeeDialog({ open, onClose, onEmployeeAdded }: { open: boolean, 
                 <Button onClick={handleSave}>Save</Button>
                 <Button onClick={onClose}>Close</Button>
             </DialogActions>
-
-            
+           
         </Dialog>
     )
 };

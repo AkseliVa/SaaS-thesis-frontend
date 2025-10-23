@@ -62,8 +62,9 @@ function Customers() {
             <Paper 
                 sx={{
                     margin: -5,
-                    padding: 5,
-                    boxSizing: "border-box"
+                    padding: 3,
+                    boxSizing: "border-box",
+                    marginTop: "3rem"
                 }}
                 elevation={20}
                 square={false}

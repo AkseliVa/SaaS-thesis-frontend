@@ -1,4 +1,3 @@
-// CustomerDialog.tsx (only the important parts replaced)
 import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography, IconButton } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import EmployeeDialog from "./EmployeeDialog";

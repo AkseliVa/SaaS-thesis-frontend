@@ -75,7 +75,7 @@ function Projects() {
                     flex: 1,
                     margin: 2,
                     padding: 5,
-
+                    marginTop: "1rem"
                 }}
                 elevation={20}
                 square={false}
@@ -158,11 +158,11 @@ function Projects() {
                         flex: 1,
                         margin: 2,
                         padding: 5,
-
+                        marginTop: "8rem"
                     }}
-                elevation={20}
-                square={false}
-            >
+                    elevation={20}
+                    square={false}
+                >   
                     <Calendar openSnackbar={openSnackbar} />
                 </Paper>
             </Box>

@@ -56,7 +56,7 @@ function Login({ onLogin }: { onLogin: () => void }) {
           fullWidth
           margin="dense"
           required
-          label="Username"
+          placeholder="Username"
           name="username"
           onChange={e => setUsername(e.target.value)}
         />
@@ -68,7 +68,7 @@ function Login({ onLogin }: { onLogin: () => void }) {
           fullWidth
           margin="dense"
           required
-          label="Password"
+          placeholder="Password"
           name="password"
           type="password"
           onChange={e => setPassword(e.target.value)}
@@ -85,7 +85,7 @@ function Login({ onLogin }: { onLogin: () => void }) {
           fullWidth
           margin="dense"
           required
-          label="Username"
+          placeholder="Username"
           name="newUsername"
           onChange={e => setNewUsername(e.target.value)}
         />
@@ -97,7 +97,7 @@ function Login({ onLogin }: { onLogin: () => void }) {
           fullWidth
           margin="dense"
           required
-          label="Password"
+          placeholder="Password"
           name="newPassword"
           type="password"
           onChange={e => setNewPassword(e.target.value)}
@@ -110,7 +110,7 @@ function Login({ onLogin }: { onLogin: () => void }) {
           fullWidth
           margin="dense"
           required
-          label="Company name"
+          placeholder="Company name"
           name="company"
           onChange={e => setCompanyName(e.target.value)}
         />
