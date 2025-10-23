@@ -12,7 +12,7 @@ function NewCustomerDialog({ open, onClose, onCustomerAdded, employees }: { open
         contactEmail: "",
         contactPhone: "",
         customerManager: null,
-        company_id: 1
+        company_id: Number(localStorage.getItem("companyId"))
     });
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,7 +37,7 @@ function NewCustomerDialog({ open, onClose, onCustomerAdded, employees }: { open
             contactPerson: "",
             contactEmail: "",
             contactPhone: "",
-            company_id: 1,
+            company_id: Number(localStorage.getItem("companyId")),
             customerManager: null
         });
     };
@@ -98,7 +98,6 @@ function NewCustomerDialog({ open, onClose, onCustomerAdded, employees }: { open
                 <Button onClick={onClose}>Close</Button>
             </DialogActions>
 
-            
         </Dialog>
     )
 };

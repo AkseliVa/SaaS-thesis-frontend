@@ -65,7 +65,7 @@ function Employees() {
                 <Paper 
                 sx={{
                     margin: -5,
-                    padding: 5,
+                    padding: 3,
                     boxSizing: "border-box",
                     marginTop: "3rem"
                 }}

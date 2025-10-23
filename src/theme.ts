@@ -47,7 +47,7 @@ const theme = createTheme({
 
     },
     h2: {
-        fontWeight: 600,
+        fontWeight: 800,
         fontSize: "1.5rem",
         color: "#eaf0f8ff",
         display: "block",
