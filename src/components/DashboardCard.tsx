@@ -11,6 +11,7 @@ function DashboardCard({ title, description, image, link }: { title: string, des
                     height="140"
                     image={image}
                     alt="green iguana"
+                    sx={{borderRadius: 1}}
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">

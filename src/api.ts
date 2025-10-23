@@ -6,6 +6,10 @@ function getCompanyId(): number {
   return Number(localStorage.getItem("companyId"));
 };
 
+function getAdminId(): number {
+  return Number(localStorage.getItem("adminId"));
+};
+
 function getAuthHeaders(): Record<string, string> {
   const token = localStorage.getItem("token");
   const headers: Record<string, string> = {
@@ -28,6 +32,20 @@ export async function fetchEverything(): Promise<Admin[]> {
         throw new Error(`Failed to fetch all-data ${response.status}`)
     };
     return await response.json();
+};
+
+export async function deleteAdmin() {
+    const id = getAdminId();
+    const response = await fetch(`${BASE_URL}/api/admins/${id}`, {
+        method: "DELETE",
+        headers: getAuthHeaders()
+    });
+
+    if (!response.ok) {
+        throw new Error(`Failed to delete admin ${response.status}`)
+    };
+
+    return;
 };
 
 // -------------------------- COMPANY ---------------------------------

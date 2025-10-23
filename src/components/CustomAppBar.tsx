@@ -13,9 +13,8 @@ import {
   Tooltip,
   MenuItem,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
 import AdbIcon from "@mui/icons-material/Adb";
-import { fetchCompany } from "../api";
+import { deleteAdmin, fetchCompany } from "../api";
 import { useEffect, useState } from "react";
 import type { Company } from "../types";
 
@@ -25,26 +24,19 @@ const pages = [
   { name: "Employees", path: "/employees" },
   { name: "Projects", path: "/projects" },
 ];
-const settings = ["Logout"];
+const settings = ["Logout", "Delete"];
 
 function CustomAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const [companyData, setCompanyData] = useState<Company>();
 
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
-  };
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
@@ -62,7 +54,7 @@ function CustomAppBar() {
     }, []);
 
   return (
-    <AppBar position="sticky" color="primary">
+    <AppBar color="primary" sx={{margin: 0}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
@@ -81,31 +73,6 @@ function CustomAppBar() {
           >
             {companyData?.name}
           </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton size="large" onClick={handleOpenNavMenu} color="inherit">
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              anchorEl={anchorElNav}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-              transformOrigin={{ vertical: "top", horizontal: "left" }}
-            >
-              {pages.map((page) => (
-                <MenuItem
-                  key={page.name}
-                  onClick={() => {
-                    navigate(page.path);
-                    handleCloseNavMenu();
-                  }}
-                >
-                  <Typography textAlign="center">{page.name}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => {
@@ -135,7 +102,7 @@ function CustomAppBar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="User Avatar" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="User Avatar" />
               </IconButton>
             </Tooltip>
             <Menu
@@ -152,6 +119,10 @@ function CustomAppBar() {
                   onClick={() => {
                     handleCloseUserMenu();
                     if (setting === "Logout") {
+                      localStorage.removeItem("token");
+                      navigate("/login");
+                    } else if (setting === "Delete") {
+                      deleteAdmin();
                       localStorage.removeItem("token");
                       navigate("/login");
                     }
