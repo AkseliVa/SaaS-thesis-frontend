@@ -12,7 +12,7 @@ function NewEmployeeDialog({ open, onClose, onEmployeeAdded }: { open: boolean, 
         role: "",
         email: "",
         phone: "",
-        company_id: 1
+        company_id: Number(localStorage.getItem("companyId"))
     });
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +38,7 @@ function NewEmployeeDialog({ open, onClose, onEmployeeAdded }: { open: boolean, 
             role: "",
             email: "",
             phone: "",
-            company_id: 1
+            company_id: Number(localStorage.getItem("companyId"))
         });
     };
 

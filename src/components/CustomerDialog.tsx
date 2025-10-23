@@ -103,8 +103,8 @@ function CustomerDialog({
         <>
           <DialogTitle>{currentCustomer.name}</DialogTitle>
           <DialogContent>
-            <Typography sx={{ display: "flex", alignItems: "center" }}>
-              Customer Manager:&nbsp;{customerManagerLabel}
+            <Typography variant="h3" sx={{ display: "flex", alignItems: "center" }}>
+              Customer Manager:&nbsp; <Typography>{customerManagerLabel}</Typography>
               {currentCustomer.customerManager && (
                 <IconButton
                   size="small"
@@ -117,33 +117,41 @@ function CustomerDialog({
               )}
             </Typography>
 
-            <Typography>Contact Person: {currentCustomer.contactPerson}</Typography>
-            <Typography>Email: {currentCustomer.contactEmail}</Typography>
-            <Typography>Phone: {currentCustomer.contactPhone}</Typography>
+            <Typography variant="h3" sx={{display: "flex"}}>Contact Person: <Typography>{currentCustomer.contactPerson}</Typography></Typography>
+            <Typography variant="h3" sx={{display: "flex"}}>Email: <Typography>{currentCustomer.contactEmail}</Typography></Typography>
+            <Typography variant="h3" sx={{display: "flex"}}>Phone: <Typography>{currentCustomer.contactPhone}</Typography></Typography>
 
             {currentCustomer.projects && currentCustomer.projects.length > 0 ? (
-              <>
-                <Typography>Projects:</Typography>
-                {currentCustomer.projects.map((project) => (
-                  <Typography key={project.project_id} sx={{ display: "flex", alignItems: "center" }}>
-                    {project.name}
-                    <IconButton
-                      size="small"
-                      color="primary"
-                      onClick={() => {
-                        setSelectedProject(project);
-                        setProjectDialogOpen(true);
-                      }}
-                      sx={{ ml: 1 }}
-                    >
-                      <InfoIcon />
-                    </IconButton>
-                  </Typography>
-                ))}
-              </>
-            ) : (
-              <Typography>No projects assigned yet</Typography>
-            )}
+            <>
+              <Typography variant="h3">Projects:</Typography>
+              {currentCustomer.projects.map((project) => (
+                <Typography
+                  key={project.project_id}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    textDecoration: project.active ? "none" : "line-through",
+                  }}
+                >
+                  {project.name}
+                  <IconButton
+                    size="small"
+                    color="primary"
+                    onClick={() => {
+                      setSelectedProject(project);
+                      setProjectDialogOpen(true);
+                    }}
+                    sx={{ ml: 1 }}
+                  >
+                    <InfoIcon />
+                  </IconButton>
+                </Typography>
+              ))}
+            </>
+          ) : (
+            <Typography>No projects assigned yet</Typography>
+          )}
+
           </DialogContent>
 
           <DialogActions>

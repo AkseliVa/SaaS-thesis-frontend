@@ -37,8 +37,8 @@ const theme = createTheme({
   typography: {
     fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
     h1: {
-        fontWeight: 700,
-        fontSize: "2rem",
+        fontWeight: 900,
+        fontSize: "3rem",
         color: "#fbfdffff",
         display: "block",
         marginBlockStart: "0.67em",
@@ -54,7 +54,7 @@ const theme = createTheme({
         marginBlockEnd: "0.67em"
     },
     h3: {
-        fontWeight: 500,
+        fontWeight: 400,
         fontSize: "1.25rem",
     },
     body1: {
@@ -89,7 +89,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
             borderRadius: 20,
-            padding: "1.5rem",
+            padding: "1rem",
             boxShadow:
             "0px 4px 12px rgba(0, 0, 0, 0.05), 0px 1px 3px rgba(0, 0, 0, 0.03)",
         },
@@ -119,15 +119,6 @@ const theme = createTheme({
           borderRadius: 20,
           boxShadow:
             "0px 0px 40px rgba(0, 0, 0, 0.1), 10px 10px 10px rgba(0, 0, 0, 0.03)",
-        },
-      },
-    },
-    MuiAppBar: {
-      styleOverrides: {
-        root: {
-          backgroundColor: "#00897B",
-          color: "#fff",
-          boxShadow: "none",
         },
       },
     },

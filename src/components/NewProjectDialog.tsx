@@ -15,7 +15,7 @@ function NewProjectDialog({ open, onClose, onProjectAdded, customers }: { open: 
         description: "",
         startDate: "",
         endDate: "",
-        company_id: 1,
+        company_id: Number(localStorage.getItem("companyId")),
         active: true,
         customer: null
     });
@@ -25,11 +25,11 @@ function NewProjectDialog({ open, onClose, onProjectAdded, customers }: { open: 
     };
 
     const handleSave = async () => {
-        const { name, description, startDate, endDate, customer } = project;
+        const { name, description, startDate, endDate } = project;
 
         project.active = true;
 
-        if (!name || !description || !startDate || !endDate || !customer) {
+        if (!name || !description || !startDate || !endDate) {
             setShowAlert(true);
             return;
         }
@@ -44,7 +44,7 @@ function NewProjectDialog({ open, onClose, onProjectAdded, customers }: { open: 
             description: "",
             startDate: "",
             endDate: "",
-            company_id: 1,
+            company_id: Number(localStorage.getItem("companyId")),
             active: true,
             customer: null
         });

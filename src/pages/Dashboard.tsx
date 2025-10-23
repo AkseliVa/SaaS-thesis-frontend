@@ -54,7 +54,7 @@ function Dashboard() {
                         />
                         <DashboardCard
                             title="Projects"
-                            description="View, add, edit and delete your projects here"
+                            description="View, add, edit, delete and manage your projects here"
                             image={projects}
                             link="/projects"
                         />

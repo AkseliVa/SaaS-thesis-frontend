@@ -89,38 +89,35 @@ function Projects() {
                     ) : (
                         <Button sx={{ marginBottom: 5, marginLeft: 5}} variant="contained" color="secondary" onClick={() => setShowArchivedProjects(false)}>Active Projects</Button>
                     )}
-                    {companyData?.projects?.length === 0 || !companyData?.projects ? (
-                        <h2>No projects yet</h2>
-                    ) : (
+
                     <Grid container spacing={10} sx={{justifyContent: "center", margin: 2}}>
                         {!showArchivedProjects ? (
-                            (activeProjects?.map((project: Project) => {
-                                return (                   
-                                    <ProjectCard
-                                        key={project.project_id}
-                                        project={project} 
-                                        onClick={() => handleCardClick(project)}   
-                                    />
-                                )
-                            }))
-                        ) : (
-                            (archivedProjects.length > 0 ? (
-                            (archivedProjects?.map((project: Project) => {
-                                return (                   
-                                    <ProjectCard
-                                        key={project.project_id}
-                                        project={project} 
-                                        onClick={() => handleCardClick(project)}   
-                                    />
-                                )
-                            }))
-                        ) : (
-                            <h2>No archived projects</h2>
-                        ))
-                        )
-                        }
+                            activeProjects.length > 0 ? (
+                                activeProjects.map((project) => (
+                                <ProjectCard
+                                    key={project.project_id}
+                                    project={project}
+                                    onClick={() => handleCardClick(project)}
+                                />
+                                ))
+                            ) : (
+                                <h2>No Active Projects</h2>
+                            )
+                            ) : (
+                            archivedProjects.length > 0 ? (
+                                archivedProjects.map((project) => (
+                                <ProjectCard
+                                    key={project.project_id}
+                                    project={project}
+                                    onClick={() => handleCardClick(project)}
+                                />
+                                ))
+                            ) : (
+                                <h2>No Archived Projects</h2>
+                            )
+                            )}
+
                     </Grid>
-                    )}
 
                     {selectedProject && (
                         <ProjectDialog 

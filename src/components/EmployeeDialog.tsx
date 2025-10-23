@@ -59,12 +59,12 @@ function EmployeeDialog({ open, onClose, employee, projects, onEmployeeDeleted, 
                 <>
                     <DialogTitle>{currentEmployee.firstname} {currentEmployee.lastname}</DialogTitle>
                     <DialogContent>
-                        <Typography>{currentEmployee.role}</Typography>
-                        <Typography>{currentEmployee.email}</Typography>
-                        <Typography>{currentEmployee.phone}</Typography>
+                        <Typography variant="h3" sx={{display: "flex"}}>Role:<Typography>{currentEmployee.role}</Typography></Typography>
+                        <Typography variant="h3" sx={{display: "flex"}}>Email: <Typography>{currentEmployee.email}</Typography></Typography>
+                        <Typography variant="h3" sx={{display: "flex"}}>Phone: <Typography>{currentEmployee.phone}</Typography></Typography>
                         {currentEmployee.projects != null && currentEmployee.projects.length > 0 ? (
                             <>
-                                <Typography>Projects: </Typography> 
+                                <Typography variant="h3">Projects: </Typography> 
                                 {currentEmployee.projects.map((project) => (
                                     <Typography key={project.project_id}>
                                         {project.name}

@@ -1,4 +1,4 @@
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -47,10 +47,11 @@ function Login({ onLogin }: { onLogin: () => void }) {
   return (
     <div style={{justifyContent: "center", alignItems: "center", display: "flex", padding: 20}}>
       <div id="login-container" style={{flex: 1, padding: 20, margin: 30}}>
-        <h1>Login</h1>
+        <Typography variant="h1">Login</Typography>
         <TextField
         sx={{
-          backgroundColor: "white"
+          backgroundColor: "white",
+          borderRadius: 1
         }}
           fullWidth
           margin="dense"
@@ -61,7 +62,8 @@ function Login({ onLogin }: { onLogin: () => void }) {
         />
         <TextField
           sx={{
-            backgroundColor: "white"
+            backgroundColor: "white",
+            borderRadius: 1
           }}
           fullWidth
           margin="dense"
@@ -74,10 +76,11 @@ function Login({ onLogin }: { onLogin: () => void }) {
         <Button sx={{marginTop: 5}} variant="contained" onClick={() => handleLogin(username, password)}>Login</Button>
       </div>
       <div id="signup-container" style={{padding: 20, margin: 30, flex: 1}}>
-        <h1>Sign-up</h1>
+        <Typography variant="h1">Sign-up</Typography>
         <TextField
           sx={{
-            backgroundColor: "white"
+            backgroundColor: "white",
+            borderRadius: 1
           }}
           fullWidth
           margin="dense"
@@ -88,7 +91,8 @@ function Login({ onLogin }: { onLogin: () => void }) {
         />
         <TextField
           sx={{
-            backgroundColor: "white"
+            backgroundColor: "white",
+            borderRadius: 1
           }}
           fullWidth
           margin="dense"
@@ -100,7 +104,8 @@ function Login({ onLogin }: { onLogin: () => void }) {
         />
         <TextField
           sx={{
-            backgroundColor: "white"
+            backgroundColor: "white",
+            borderRadius: 1
           }}
           fullWidth
           margin="dense"
