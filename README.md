@@ -1,54 +1,60 @@
-# React + TypeScript + Vite
+# Company Management Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the **frontend** for a full-stack company management application built with **React**, **TypeScript**, and **Material UI (MUI)**.  
+The app enables companies to manage their **employees, customers, and projects**, with a user-friendly interface and modern design.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Key Features
 
-## Expanding the ESLint configuration
+- **User Authentication**
+  - Secure login and registration for admins and company accounts.
+  - Token-based access control with protected routes.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Dashboard Overview**
+  - Displays key company information and quick access to sections like Employees, Customers, and Projects.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- **Customer Management**
+  - Create, edit, and delete customers.
+  - Assign a customer manager and view their contact information.
+  - View and manage associated projects.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- **Employee Management**
+  - Add, edit, and remove employees.
+  - View assigned projects and customers.
+  - Employee details accessible via dialog pop-ups.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **Project Management**
+  - Create, edit, and archive projects.
+  - Link projects to customers and employees.
+  - Track project timelines visually on a **calendar**.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+- **Calendar View**
+  - Interactive calendar displaying project durations and deadlines.
+
+- **Responsive Design**
+  - Built using **MUI’s Grid system** for consistent spacing and responsive layouts.
+  - Supports both desktop and tablet displays.
+
+- **Global Theme with `createTheme()`**
+  - Centralized MUI theme with custom colors, typography, and component styles.
+
+---
+
+## 🧱 Technologies Used
+
+| Category | Technology |
+|-----------|-------------|
+| Framework | React + TypeScript |
+| Styling | Material UI (MUI v5) |
+| Routing | React Router DOM |
+| State & Context | React Hooks + Local Storage |
+| Date Handling | dayjs + MUI X Date Pickers |
+| HTTP Requests | Fetch API (custom `api.ts`) |
+| Build Tool | Vite |
+| Type Safety | TypeScript Interfaces for all models |
+
+---
+
+## 📁 Project Structure
+
