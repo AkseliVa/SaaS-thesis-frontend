@@ -5,7 +5,7 @@ The app enables companies to manage their **employees, customers, and projects**
 
 ---
 
-## 🚀 Key Features
+## Key Features
 
 - **User Authentication**
   - Secure login and registration for admins and company accounts.
@@ -41,7 +41,7 @@ The app enables companies to manage their **employees, customers, and projects**
 
 ---
 
-## 🧱 Technologies Used
+## Technologies Used
 
 | Category | Technology |
 |-----------|-------------|
