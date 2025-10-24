@@ -1,4 +1,4 @@
-import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography, IconButton } from "@mui/material";
+import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography, IconButton, List, ListItemText, ListItemIcon, ListItem } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import EmployeeDialog from "./EmployeeDialog";
 import ProjectDialog from "./ProjectDialog";
@@ -101,10 +101,15 @@ function CustomerDialog({
       {!isEdit ? (
         <>
           <DialogTitle>{currentCustomer.name}</DialogTitle>
+          <List dense={true}>
           <DialogContent>
-            <Typography variant="h3" sx={{ display: "flex", alignItems: "center" }}>
-              Customer Manager:&nbsp; <Typography>{customerManagerLabel}</Typography>
-              {currentCustomer.customerManager && (
+            <ListItem>
+            <ListItemText 
+              primary="Customer Manager"
+              secondary={customerManagerLabel}
+            />
+            {currentCustomer.customerManager && (
+              <ListItemIcon>
                 <IconButton
                   size="small"
                   color="primary"
@@ -113,17 +118,33 @@ function CustomerDialog({
                 >
                   <InfoIcon />
                 </IconButton>
+                </ListItemIcon>
               )}
-            </Typography>
-
-            <Typography variant="h3" sx={{display: "flex"}}>Contact Person: <Typography>{currentCustomer.contactPerson}</Typography></Typography>
-            <Typography variant="h3" sx={{display: "flex"}}>Email: <Typography>{currentCustomer.contactEmail}</Typography></Typography>
-            <Typography variant="h3" sx={{display: "flex"}}>Phone: <Typography>{currentCustomer.contactPhone}</Typography></Typography>
-
-            {currentCustomer.projects && currentCustomer.projects.length > 0 ? (
-            <>
-              <Typography variant="h3">Projects:</Typography>
-              {currentCustomer.projects.map((project) => (
+              </ListItem>
+              <ListItem>
+                <ListItemText 
+                  primary="Contact Person"
+                  secondary={currentCustomer.contactPerson}
+                />
+              </ListItem>
+              <ListItem>
+                <ListItemText 
+                  primary="Contact Email"
+                  secondary={currentCustomer.contactEmail}
+                />
+              </ListItem>
+              <ListItem>
+                <ListItemText 
+                  primary="Contact Phone"
+                  secondary={currentCustomer.contactPhone}
+                />
+              </ListItem>
+            <ListItem>
+              <ListItemText 
+                primary="Projects"
+                secondary={
+                  currentCustomer.projects && currentCustomer.projects.length > 0 ? (
+                    currentCustomer.projects.map((project) => (
                 <Typography
                   key={project.project_id}
                   sx={{
@@ -145,13 +166,13 @@ function CustomerDialog({
                     <InfoIcon />
                   </IconButton>
                 </Typography>
-              ))}
-            </>
-          ) : (
-            <Typography>No projects assigned yet</Typography>
-          )}
-
+              ))) : (
+                <Typography>No projects assigned yet</Typography>
+              )}
+              />
+            </ListItem>
           </DialogContent>
+          </List>
 
           <DialogActions>
             <Button color="secondary" onClick={() => setIsEdit(true)}>Edit</Button>

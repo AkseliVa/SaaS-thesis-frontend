@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle,  InputLabel,  TextField, Typography } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, InputLabel,  List,  ListItem,  ListItemText,  TextField, Typography } from "@mui/material";
 import type { Employee, Project } from "../types";
 import { deleteEmployee, updateEmployee } from "../api";
 import { useEffect, useState } from "react";
@@ -59,22 +59,49 @@ function EmployeeDialog({ open, onClose, employee, projects, onEmployeeDeleted, 
                 <>
                     <DialogTitle>{currentEmployee.firstname} {currentEmployee.lastname}</DialogTitle>
                     <DialogContent>
-                        <Typography variant="h3" sx={{display: "flex"}}>Role:<Typography>{currentEmployee.role}</Typography></Typography>
-                        <Typography variant="h3" sx={{display: "flex"}}>Email: <Typography>{currentEmployee.email}</Typography></Typography>
-                        <Typography variant="h3" sx={{display: "flex"}}>Phone: <Typography>{currentEmployee.phone}</Typography></Typography>
-                        {currentEmployee.projects != null && currentEmployee.projects.length > 0 ? (
-                            <>
-                                <Typography variant="h3">Projects: </Typography> 
-                                {currentEmployee.projects.map((project) => (
-                                    <Typography key={project.project_id}>
-                                        {project.name}
-                                    </Typography>
-                                ))}
-                            </>
-                        
-            ) : (
-                <Typography>No projects assigned yet</Typography>
-            )}
+                        <List dense={true}>
+                            <ListItem>
+                                <ListItemText 
+                                    primary="Role"
+                                    secondary={currentEmployee.role}
+                                />
+                            </ListItem>
+                            <ListItem>
+                                <ListItemText 
+                                    primary="Email"
+                                    secondary={currentEmployee.email}
+                                />
+                            </ListItem>
+                            <ListItem>
+                                <ListItemText 
+                                    primary="Phone"
+                                    secondary={currentEmployee.phone}
+                                />
+                            </ListItem>
+                            <ListItem>
+                                <ListItemText 
+                                    primary="Projects"
+                                    secondary={
+                                    currentEmployee.projects && currentEmployee.projects.length > 0 ? (
+                                        currentEmployee.projects.map((project) => (
+                                            <Typography
+                                                key={project.project_id}
+                                                sx={{
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                    textDecoration: project.active ? "none" : "line-through",
+                                                }}
+                                            >
+                                            {project.name}
+                                            </Typography>
+                                    )
+                                        )) : (
+                                            <Typography>No projects assigned yet</Typography>
+                                        )
+                                    }
+                                />
+                            </ListItem>
+                        </List>
                     </DialogContent>
                     <DialogActions>
                         {!fromCustomer && (
@@ -91,6 +118,7 @@ function EmployeeDialog({ open, onClose, employee, projects, onEmployeeDeleted, 
                     <DialogTitle>Edit Employee</DialogTitle>
                     <DialogContent>
                         <TextField
+                            fullWidth margin="dense"
                             name="firstname"
                             label="Firstname" 
                             variant="outlined"
@@ -98,13 +126,15 @@ function EmployeeDialog({ open, onClose, employee, projects, onEmployeeDeleted, 
                             onChange={handleChange}
                         />
                         <TextField
+                            fullWidth margin="dense"
                             name="lastname"
                             label="Lastname"
                             variant="outlined"
                             value={editedEmployee.lastname}
                             onChange={handleChange}
                         />
-                        <TextField 
+                        <TextField
+                            fullWidth margin="dense"
                             name="role"
                             label="Role" 
                             variant="outlined"
@@ -112,6 +142,7 @@ function EmployeeDialog({ open, onClose, employee, projects, onEmployeeDeleted, 
                             onChange={handleChange}
                         />
                         <TextField
+                            fullWidth margin="dense"
                             name="email"
                             label="Email"
                             variant="outlined"
@@ -119,6 +150,7 @@ function EmployeeDialog({ open, onClose, employee, projects, onEmployeeDeleted, 
                             onChange={handleChange}
                         />
                         <TextField
+                            fullWidth margin="dense"
                             name="phone"
                             label="Phone"
                             variant="outlined"

@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, InputLabel, List, ListItem, ListItemText, MenuItem, Select, TextField, Typography } from "@mui/material";
 import type { Employee, Project } from "../types";
 import { deleteProject, updateProject } from "../api";
 import { useEffect, useState } from "react";
@@ -78,27 +78,47 @@ function ProjectDialog({ open, onClose, project, employees, onProjectDeleted, on
                 <>
                     <DialogTitle>{currentProject.name}</DialogTitle>
                     <DialogContent>
-                        {currentProject.customer ? (
-                            <Typography>{currentProject.customer.name}</Typography>
-                        ) : (
-                            <Typography>No customer</Typography>
-                        )}
-                        <Typography>{currentProject.description}</Typography>
-                        <Typography>Start: {currentProject.startDate}</Typography>
-                        <Typography>End: {currentProject.endDate}</Typography>
-                        {currentProject.employees != null && currentProject.employees.length > 0 ? (
-                            <>
-                                <Typography>Workers: </Typography> 
-                                {currentProject.employees.map((worker) => (
-                                    <Typography key={worker.employee_id}>
-                                        {worker.firstname} {worker.lastname}
-                                    </Typography>
-                                ))}
-                            </>
-                        
-            ) : (
-                <Typography>No workers assigned yet</Typography>
-            )}
+                        <List dense={true}>
+                            <ListItem>
+                                <ListItemText
+                                    primary="Customer"
+                                    secondary={currentProject?.customer?.name || "No customer"}
+                                />
+                            </ListItem>
+                            <ListItem>
+                                <ListItemText 
+                                    primary="Description"
+                                    secondary={currentProject?.description}
+                                />
+                            </ListItem>
+                            <ListItem>
+                                <ListItemText 
+                                    primary="Start date"
+                                    secondary={currentProject.startDate}
+                                />
+                            </ListItem>
+                            <ListItem>
+                                <ListItemText 
+                                    primary="End date"
+                                    secondary={currentProject.endDate}
+                                />
+                            </ListItem>
+                            <ListItem>
+                                <ListItemText 
+                                    primary="Workers"
+                                    secondary={
+                                        currentProject.employees != null && currentProject.employees.length > 0 ? (
+                                            currentProject.employees.map((worker) => (
+                                                <Typography key={worker.employee_id}>
+                                                    {worker.firstname} {worker.lastname}
+                                                </Typography>
+                                                    ))) : (
+                                                        "No workers assigned"
+                                                    )
+                                    }
+                                />
+                            </ListItem>
+                        </List>
                     </DialogContent>
                     <DialogActions>
                         {!fromCustomer && (
