@@ -94,3 +94,15 @@ The app enables companies to manage their **employees, customers, and projects**
   <li>main.tsx (entrypoint)</li>
   <li>theme.ts (styling theme for the app)</li>
 </ul>
+
+# Improvement ideas for the future
+<ul>
+  <li>When creating/adding a new employee also create a username and password for the employee</li>
+  <ul>
+    <li>Currently only admins can use the software, but adding in usage for regular employees with basically only view access</li>
+  </ul>
+  <li>Publishing</li>
+  <li>Incorporating emails, so that for example when a change is made to a project a user is in they get notified</li>
+  <li>"Notes" or something similiar for projects and customers</li>
+  <li>Log-info for everything that happens on a companys site so that an admin can see what changes have been made and by who</li>
+</ul>
