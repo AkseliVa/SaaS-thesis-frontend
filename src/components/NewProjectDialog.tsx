@@ -97,6 +97,7 @@ function NewProjectDialog({ open, onClose, onProjectAdded, customers }: { open: 
                 />
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DesktopDatePicker
+                        orientation="landscape"
                         label="Start Date"
                         value={project.startDate ? dayjs(project.startDate) : null}
                         onChange={(value) => {
@@ -105,7 +106,12 @@ function NewProjectDialog({ open, onClose, onProjectAdded, customers }: { open: 
                             startDate: value ? dayjs(value).format("YYYY-MM-DD") : "",
                         });
                         }}
-                        slotProps={{ textField: { fullWidth: true, margin: "dense", required: true } }}
+                        slotProps={{ 
+                            textField: { fullWidth: true, margin: "dense", required: true }, 
+                            popper: {
+                                placement: "right",
+                            },
+                        }}
                     />
 
                     <DesktopDatePicker
@@ -117,7 +123,12 @@ function NewProjectDialog({ open, onClose, onProjectAdded, customers }: { open: 
                             endDate: value ? dayjs(value).format("YYYY-MM-DD") : "",
                         });
                         }}
-                        slotProps={{ textField: { fullWidth: true, margin: "dense", required: true } }}
+                        slotProps={{ 
+                            textField: { fullWidth: true, margin: "dense", required: true },
+                            popper: {
+                                placement: "right",
+                            }, 
+                        }}
                     />
                 </LocalizationProvider>
             </DialogContent>
