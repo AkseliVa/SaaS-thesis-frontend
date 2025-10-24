@@ -82,12 +82,12 @@ The app enables companies to manage their **employees, customers, and projects**
   </ul>
   <li>pages</li>
   <ul>
-    <li>Calendar.tsx</li>
-    <li>Customer.tsx</li>
-    <li>Dashboard.tsx</li>
-    <li>Employees.tsx</li>
-    <li>Login.tsx</li>
-    <li>Projects.tsx</li>
+    <li><strong>Calendar.tsx</strong></li><img width="918" height="683" alt="calendar" src="https://github.com/user-attachments/assets/51382918-39f7-4188-ad74-97b4a2e2b4c1" />
+    <li><strong>Customers.tsx</strong></li><img width="959" height="410" alt="customers" src="https://github.com/user-attachments/assets/39e28ed6-2476-4dcd-aa93-b5c3d9793daf" />
+    <li><strong>Dashboard.tsx</strong></li><img width="959" height="414" alt="dashboard" src="https://github.com/user-attachments/assets/a5f8adfc-c3bb-454f-914f-8396464a1b52" />
+    <li><strong>Employees.tsx</strong></li><img width="959" height="413" alt="employees" src="https://github.com/user-attachments/assets/b8afe72e-7f38-40c6-8028-bb812baaf8d0" />
+    <li><strong>Login.tsx</strong></li><img width="947" height="413" alt="login" src="https://github.com/user-attachments/assets/5bbf9832-5597-47c1-a830-13cde2f96cdf" />
+    <li><strong>Projects.tsx</strong></li><img width="947" height="413" alt="projects" src="https://github.com/user-attachments/assets/d0f7da01-b9dc-40d2-a04a-70fa8ff5dc45" />
   </ul>
   <li>styles (will be deleted)</li>
   <li>api.ts (all API-fetching)</li>
