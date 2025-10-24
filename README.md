@@ -53,3 +53,44 @@ The app enables companies to manage their **employees, customers, and projects**
 | HTTP Requests | Fetch API (custom `api.ts`) |
 | Build Tool | Vite |
 | Type Safety | TypeScript Interfaces for all models |
+
+---
+
+## Folder Structure
+<ul>
+  <li>assets</li>
+  <ul>
+    <li>images</li>
+    <ul>
+      <li>images for the dashboard</li>
+    </ul>
+  </ul>
+  <li>components</li>
+  <ul>
+    <li>CustomAppBar.tsx</li>
+    <li>CustomerCard.tsx</li>
+    <li>CustomerDialog.tsx</li>
+    <li>DashboardCard.tsx</li>
+    <li>EmployeeCard.tsx</li>
+    <li>EmployeeDialog.tsx</li>
+    <li>NewCustomerDialog.tsx</li>
+    <li>NewEmployeeDialog.tsx</li>
+    <li>NewProjectDialog.tsx</li>
+    <li>ProjectCard.tsx</li>
+    <li>ProjectDialog.tsx</li>
+    <li>ProtectedRoute.tsx</li>
+  </ul>
+  <li>pages</li>
+  <ul>
+    <li>Calendar.tsx</li>
+    <li>Customer.tsx</li>
+    <li>Dashboard.tsx</li>
+    <li>Employees.tsx</li>
+    <li>Login.tsx</li>
+    <li>Projects.tsx</li>
+  </ul>
+  <li>styles (will be deleted)</li>
+  <li>api.ts (all API-fetching)</li>
+  <li>main.tsx (entrypoint)</li>
+  <li>theme.ts (styling theme for the app)</li>
+</ul>
