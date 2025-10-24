@@ -53,8 +53,3 @@ The app enables companies to manage their **employees, customers, and projects**
 | HTTP Requests | Fetch API (custom `api.ts`) |
 | Build Tool | Vite |
 | Type Safety | TypeScript Interfaces for all models |
-
----
-
-## 📁 Project Structure
-
