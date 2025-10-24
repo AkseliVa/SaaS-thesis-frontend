@@ -69,15 +69,15 @@ The app enables companies to manage their **employees, customers, and projects**
   <ul>
     <li>CustomAppBar.tsx</li>
     <li>CustomerCard.tsx</li>
-    <li>CustomerDialog.tsx</li>
+    <li>CustomerDialog.tsx</li><img width="368" height="369" alt="customerDialog" src="https://github.com/user-attachments/assets/d5e021bb-b967-4549-8da4-a75b7bdf5cdb" />
     <li>DashboardCard.tsx</li>
     <li>EmployeeCard.tsx</li>
-    <li>EmployeeDialog.tsx</li>
+    <li>EmployeeDialog.tsx</li><img width="449" height="314" alt="employeeDialog" src="https://github.com/user-attachments/assets/7c284892-5b87-4e71-aa37-a134058d503e" />
     <li>NewCustomerDialog.tsx</li>
     <li>NewEmployeeDialog.tsx</li>
     <li>NewProjectDialog.tsx</li>
     <li>ProjectCard.tsx</li>
-    <li>ProjectDialog.tsx</li>
+    <li>ProjectDialog.tsx</li><img width="406" height="341" alt="projectDialog" src="https://github.com/user-attachments/assets/fa512af0-8632-46f4-a02a-a2b0b96dfb7d" />
     <li>ProtectedRoute.tsx</li>
   </ul>
   <li>pages</li>
