@@ -65,7 +65,7 @@ function Projects() {
         <Box
             sx={{
                 justifyContent: "center",
-                alignItems: "center",
+                alignItems: "flex-start",
                 padding: 0,
                 display: "flex"
             }}
@@ -74,8 +74,8 @@ function Projects() {
                 sx={{
                     flex: 1,
                     margin: 2,
-                    padding: 5,
-                    marginTop: "1rem"
+                    padding: 7,
+                    marginTop: "8rem"
                 }}
                 elevation={20}
                 square={false}
