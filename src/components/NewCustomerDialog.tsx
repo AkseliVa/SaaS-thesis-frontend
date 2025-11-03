@@ -60,7 +60,7 @@ function NewCustomerDialog({ open, onClose, onCustomerAdded, employees }: { open
                     onChange={handleChange}
                 />
                 <Autocomplete
-                    options={employees}
+                    options={employees ?? []}
                     getOptionLabel={option => `${option.firstname} ${option.lastname}`}
                     value={customer.customerManager}
                     onChange={(_, newValue) =>

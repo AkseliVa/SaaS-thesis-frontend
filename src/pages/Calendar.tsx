@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { PickersDay, type PickersDayProps } from "@mui/x-date-pickers/PickersDay";
@@ -8,10 +8,8 @@ import { Tooltip } from "@mui/material";
 import { fetchCompany } from "../api";
 import type { Project } from "../types";
 
-function Calendar(openSnackbar) {
-  const [projectDates, setProjectDates] = useState<Record<string, string[]>>(
-    {}
-  );
+function Calendar({ openSnackbar }: { openSnackbar?: unknown }) {
+  const [projectDates, setProjectDates] = useState<Record<string, string[]>>({});
 
   useEffect(() => {
     const fetchCompanyData = async () => {
@@ -21,8 +19,7 @@ function Calendar(openSnackbar) {
         const dates: Record<string, string[]> = {};
 
         data.projects?.forEach((project: Project) => {
-          if (project.active !== false) {
-          if (project.startDate && project.endDate) {
+          if (project.active !== false && project.startDate && project.endDate) {
             let current = dayjs(project.startDate);
             const end = dayjs(project.endDate);
 
@@ -31,11 +28,10 @@ function Calendar(openSnackbar) {
               if (!dates[key]) {
                 dates[key] = [];
               }
-                dates[key].push(project.name);
-                current = current.add(1, "day");
+              dates[key].push(project.name);
+              current = current.add(1, "day");
             }
           }
-        }
         });
 
         setProjectDates(dates);
@@ -43,17 +39,19 @@ function Calendar(openSnackbar) {
         console.log(err);
       }
     };
+
     fetchCompanyData();
   }, [openSnackbar]);
 
-  const ServerDay = (
-    props: PickersDayProps<Dayjs> & { projectDates?: Record<string, string[]> }
-  ) => {
-    const { day, outsideCurrentMonth, projectDates = {}, ...other } = props;
+  interface ServerDayProps extends PickersDayProps {
+    projectDates: Record<string, string[]>;
+  }
 
-    const key = day.format("YYYY-MM-DD");
+  const ServerDay = (props: ServerDayProps) => {
+    const { day, outsideCurrentMonth, projectDates, ...other } = props;
+
+    const key = dayjs(day).format("YYYY-MM-DD");
     const projectsToday = projectDates[key] || [];
-
     const isHighlighted = projectsToday.length > 0;
 
     const dayElement = (
@@ -89,8 +87,10 @@ function Calendar(openSnackbar) {
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DateCalendar
           defaultValue={dayjs()}
-          slots={{ day: ServerDay }}
-          slotProps={{ day: { projectDates } }}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          slots={{ day: ServerDay } as any}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          slotProps={{ day: { projectDates } as any }}
         />
       </LocalizationProvider>
     </>

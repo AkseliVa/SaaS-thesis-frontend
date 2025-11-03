@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-route
 import Dashboard from "./pages/Dashboard";
 import Employees from "./pages/Employees";
 import Projects from "./pages/Projects";
-import Calendar from "./pages/Calendar";
 import Customers from "./pages/Customers";
 import Login from "./pages/Login";
 import { ProtectedRoute } from "./components/ProtectedRoute";
@@ -53,14 +52,6 @@ function AppContent() {
           element={
             <ProtectedRoute token={token}>
               <Projects />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/calendar"
-          element={
-            <ProtectedRoute token={token}>
-              <Calendar />
             </ProtectedRoute>
           }
         />
